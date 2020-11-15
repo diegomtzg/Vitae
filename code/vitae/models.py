@@ -1,8 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
 
-MAX_CHARFIELD_LENGTH = 50
-
 class Profile(models.Model):
     owner = models.OneToOneField(User, on_delete=models.CASCADE)
     profilePic = models.FileField(blank=True)
@@ -12,27 +10,55 @@ class Profile(models.Model):
 
 # Parent class for all profile sections
 class ProfileSection(models.Model):
-    sectionName = models.CharField(max_length=MAX_CHARFIELD_LENGTH)
+    profile = models.ForeignKey(Profile, on_delete=models.CASCADE) # Profile that each section belongs to.
 
 
-class Intro(ProfileSection):
-    # Intro section uses user data to populate contact info
+class IntroSection(ProfileSection):
     bio = models.TextField()
-    # TODO: Add socials
+    linkedin = models.URLField()
+    facebook = models.URLField()
+    twitter = models.URLField()
+    github = models.URLField()
 
 
-class WorkExperience(ProfileSection):
-    companyName = models.CharField(max_length=MAX_CHARFIELD_LENGTH)
-    title = models.CharField(max_length=MAX_CHARFIELD_LENGTH)
+class WorkExperienceSection(ProfileSection):
+    sectionName = "Work Experience"
+    companyName = models.TextField()
+    title = models.TextField()
     startDate = models.DateField()
     endDate = models.DateField() # TODO: Or current?
     description = models.TextField()
 
-class Education(ProfileSection):
-    schoolName = models.CharField(max_length=MAX_CHARFIELD_LENGTH)
-    location = models.CharField(max_length=MAX_CHARFIELD_LENGTH)
-    degree = models.CharField(max_length=MAX_CHARFIELD_LENGTH)
+
+class EducationSection(ProfileSection):
+    sectionName = "Education"
+    schoolName = models.TextField()
+    location = models.TextField()
+    degree = models.TextField()
     gpa = models.FloatField()
     gradDate = models.DateField()
 
-# TODO: Add Projects, Skills, Research and Awards
+
+class ProjectsSection(ProfileSection):
+    sectionName = "Projects"
+    name = models.TextField()
+    description = models.TextField()
+    startDate = models.DateField()
+    endDate = models.DateField()
+    # TODO: Add photos/videos
+
+
+class SkillsSection(ProfileSection):
+    sectionName = "Skills"
+    name = models.TextField()
+    confidence = models.FloatField() # TODO: Set a range from 0-100
+
+# TODO: Add research and awards
+
+# Creates and links new sections to a given profile
+def initSections(profile):
+    IntroSection().profile = profile
+    WorkExperienceSection().profile = profile
+    EducationSection().profile = profile
+    ProjectsSection().profile = profile
+    SkillsSection().profile = profile

@@ -1,7 +1,7 @@
 {% extends 'vitae/base.html' %}
 
 {% block page_title %}
-    {{ firstName }} {{ lastName }}
+    {{ profileUser.first_name }} {{ profileUser.last_name }}
 {% endblock %}
 
 {% block page_css %}
@@ -11,6 +11,26 @@
     <!-- Core theme CSS (includes Bootstrap)-->
     {% load static %}
     <link href="{% static 'vitae/css/styles.css' %}" rel="stylesheet" />
+{% endblock %}
+
+{% block page_js %}
+    <script src="{% static 'vitae/js/scripts.js' %}"></script>
+    <script>
+
+        function addSection(sectionName) {
+            var request = new XMLHttpRequest();
+            request.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    document.getElementById("modal-form-div").innerHTML = this.responseText;
+                    console.log(this.responseText)
+                }
+            };
+
+            console.log(sectionName)
+            request.open("GET", "/getAddSectionForm/" + sectionName, true);
+            request.send();
+        }
+    </script>
 {% endblock %}
 
 
@@ -44,20 +64,63 @@
             <section class="resume-section" id="about">
                 <div class="resume-section-content">
                     <h1 class="mb-0">
-                        {{ firstName }}
-                        <span class="text-primary">{{ lastName }}</span>
+                        {{ profileOwner.first_name }}
+                        <span class="text-primary">{{ profileOwner.last_name }}</span>
                     </h1>
                     <div class="subheading mb-5">
                         5000 Forbes Ave · Pittsburgh, PA 15213 · (888) 888-8888 ·
-                        <a href="mailto:name@email.com">name@email.com</a>
+                        <a href="mailto:name@email.com">{{ profileOwner.email }}</a>
                     </div>
-                    <p class="lead mb-5">Short Bio yadayada</p>
+                    <p class="lead mb-5">Short Bio goes here</p>
                     <div class="social-icons">
                         <a class="social-icon" href="#"><i class="fab fa-linkedin-in"></i></a>
                         <a class="social-icon" href="#"><i class="fab fa-github"></i></a>
                         <a class="social-icon" href="#"><i class="fab fa-twitter"></i></a>
                         <a class="social-icon" href="#"><i class="fab fa-facebook-f"></i></a>
                     </div>
+                    <!-- Add Section Dropdown -->
+                    <!-- TODO: Disable option if section is already enabled -->
+                    <div class="dropdown">
+                        <button class="btn btn-secondary dropdown-toggle" type="button"
+                                id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+                                aria-expanded="false" >
+                            Add profile section
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <!-- TODO: Only show this if profile user == logged in user -->
+                            <button data-toggle="modal" data-target="#addSectionPopup"
+                                    class="dropdown-item" onclick="addSection('Work Experience')">Work Experience</button>
+                            <button data-toggle="modal" data-target="#addSectionPopup"
+                                    class="dropdown-item" onclick="addSection('Education')">Education</button>
+                            <button data-toggle="modal" data-target="#addSectionPopup"
+                                    class="dropdown-item" onclick="addSection('Projects')">Projects</button>
+                            <button data-toggle="modal" data-target="#addSectionPopup"
+                                    class="dropdown-item" onclick="addSection('Skills')">Skills</button>
+                        </div>
+                    </div>
+
+                    <div class="modal fade" id="addSectionPopup" tabindex="-1" role="dialog" aria-labelledby="addSectionPopupLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="addSectionPopupLabel">
+                                        Modal title
+                                    </h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div id="modal-form-div" class="modal-body">
+                                    <!-- Fill with AJAX -->
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <button type="button" class="btn btn-primary">Save changes</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
             </section>
             <hr class="m-0" />

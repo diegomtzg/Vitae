@@ -2,6 +2,8 @@ from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
 
+from vitae.models import *
+
 class RegisterForm(forms.Form):
     firstName = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control', 'placeholder': 'First name'}))
     lastName = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control', 'placeholder': 'Last name'}))
@@ -41,3 +43,27 @@ class LoginForm(forms.Form):
             raise forms.ValidationError('Invalid username or password.')
 
         return clean_data
+
+
+class WorkExperienceForm(forms.ModelForm):
+    class Meta:
+        model = WorkExperienceSection
+        exclude = ('sectionName',)
+
+
+class EducationForm(forms.ModelForm):
+    class Meta:
+        model = EducationSection
+        exclude = ('sectionName',)
+
+
+class ProjectsForm(forms.ModelForm):
+    class Meta:
+        model = ProjectsSection
+        exclude = ('sectionName',)
+
+
+class SkillsForm(forms.ModelForm):
+    class Meta:
+        model = SkillsSection
+        exclude = ('sectionName',)
