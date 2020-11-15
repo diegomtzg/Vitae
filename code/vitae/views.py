@@ -5,8 +5,8 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 
 from django.contrib.auth.models import User
-from portfolio.models import Profile
-from portfolio.forms import RegisterForm, LoginForm
+from vitae.models import Profile
+from vitae.forms import RegisterForm, LoginForm
 
 defaultProfilePicPath = settings.ASSETS_ROOT + 'img/defaultProfilePic.jpg'
 
@@ -15,30 +15,30 @@ def loginAction(request):
     if request.method == 'GET':
         # If user is already logged in, redirect to their profile.
         if request.user.is_authenticated:
-            return redirect(reverse('profile', args=[0]))
+            return redirect(reverse('profile', args=[request.user.username]))
 
-        return render(request, 'portfolio/login.html', {'form': LoginForm()})
+        return render(request, 'vitae/login.html', {'form': LoginForm()})
 
     form = LoginForm(request.POST)
     if not form.is_valid():
-        return render(request, 'portfolio/login.html', {'form': form})
+        return render(request, 'vitae/login.html', {'form': form})
 
     user = authenticate(username=form.cleaned_data['username'],
                         password=form.cleaned_data['password'])
     print("User logged in:", form.cleaned_data['username'])
     login(request, user)
-    return redirect(reverse('profile', args=[0]))
+    return redirect(reverse('profile', args=[user.username]))
 
 
 def registerAction(request):
     # Send empty register form for user to fill out.
     if request.method == 'GET':
-        return render(request, 'portfolio/register.html', {'form': RegisterForm()})
+        return render(request, 'vitae/register.html', {'form': RegisterForm()})
 
     # Received register form. Validate and create new user.
     registerForm = RegisterForm(request.POST)
     if not registerForm.is_valid():
-        return render(request, 'portfolio/register.html', {'form': registerForm})
+        return render(request, 'vitae/register.html', {'form': registerForm})
 
     print("Valid register POST request received: ", request.POST)
     newUser = User.objects.create_user(
@@ -64,14 +64,20 @@ def registerAction(request):
     login(request, authUser)
 
     # After logging user in, redirect them to their profile.
-    return redirect(reverse('profile', args=[0])) # TODO: Use user.username
+    return redirect(reverse('profile', args=[newUser.username]))
 
 
 @login_required
 def visitProfileAction(request, username):
     if request.method == 'GET':
-        # TODO: Change this to get database data for profile page based on username
-        return render(request, 'portfolio/portfolio.html')
+        user = get_object_or_404(User, username=username)
+        context = {
+            'username': user.username,
+            'firstName': user.first_name,
+            'lastName': user.last_name,
+        }
+
+        return render(request, 'vitae/profile.html', context)
 
 
 @login_required
