@@ -3,10 +3,13 @@ from django.shortcuts import render, redirect, reverse, get_object_or_404
 from django.http import HttpResponse
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from django.core import serializers
 
 from django.contrib.auth.models import User
-from vitae.models import Profile
-from vitae.forms import RegisterForm, LoginForm
+from vitae.models import *
+from vitae.forms import *
+
+import json
 
 defaultProfilePicPath = settings.ASSETS_ROOT + 'img/defaultProfilePic.jpg'
 
@@ -50,8 +53,9 @@ def registerAction(request):
     newUser.save()
     print("New user created:", newUser)
 
-    # Also create a new profile associated with this user (initially empty).
+    # Also create a new profile associated with this user and create its (empty) sections.
     newProfile = Profile()
+    # initSections(newProfile)
     newProfile.owner = newUser
     newProfile.save()
     print("New profile created for new user:", newProfile)
@@ -71,19 +75,37 @@ def registerAction(request):
 def visitProfileAction(request, username):
     if request.method == 'GET':
         user = get_object_or_404(User, username=username)
-        context = {
-            'username': user.username,
-            'firstName': user.first_name,
-            'lastName': user.last_name,
-        }
-
+        context = getProfileContext(user)
         return render(request, 'vitae/profile.html', context)
 
+
+def getAddSectionForm(request, sectionName):
+    form = None
+    if sectionName == WorkExperienceSection.sectionName:
+        form = WorkExperienceForm()
+    elif sectionName == EducationSection.sectionName:
+        form = EducationForm()
+    elif sectionName == ProjectsSection.sectionName:
+        form = ProjectsForm()
+    elif sectionName == SkillsSection.sectionName:
+        form = SkillsForm()
+
+    response = serializers.serialize("json", form)
+    print(response)
+    response = HttpResponse(response, content_type='application/json')
+    return response
 
 @login_required
 def getPhoto(request, username):
     profile = get_object_or_404(User, username=username).profile
     return HttpResponse(profile.profilePic, content_type=profile.profilePicContentType)
+
+
+def getProfileContext(profileUser):
+    context = {
+        'profileOwner': profileUser,
+    }
+    return context
 
 
 # Used temporarily for debugging...

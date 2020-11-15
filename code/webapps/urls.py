@@ -23,6 +23,7 @@ urlpatterns = [
     path('login', views.loginAction, name='login'),
     path('photos/<str:username>', views.getPhoto, name='photo'),
     path('profile/<str:username>', views.visitProfileAction, name='profile'),
+    path('getAddSectionForm/<str:sectionName>', views.getAddSectionForm),
 
     path('logout', views.debugLogout),
     path('delete', views.debugDelete),
