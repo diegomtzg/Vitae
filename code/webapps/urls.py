@@ -15,10 +15,15 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from portfolio import views
+from vitae import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', views.portfolio_action, name='portfolio'),
-    path('register', views.register_action, name='register'),
+    path('register', views.registerAction, name='register'),
+    path('login', views.loginAction, name='login'),
+    path('photos/<str:username>', views.getPhoto, name='photo'),
+    path('profile/<str:username>', views.visitProfileAction, name='profile'),
+
+    path('logout', views.debugLogout),
+    path('delete', views.debugDelete),
 ]
