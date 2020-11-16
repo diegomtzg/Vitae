@@ -1,10 +1,12 @@
 {% extends 'vitae/base.html' %}
 
 {% block page_title %}
-    {{ profileUser.first_name }} {{ profileUser.last_name }}
+    {{ profileOwner.first_name }} {{ profileOwner.last_name }}
 {% endblock %}
 
 {% block page_css %}
+    <!-- Font Awesome icons-->
+    <script src="https://use.fontawesome.com/releases/v5.15.1/js/all.js" crossorigin="anonymous"></script>
     <!-- Google fonts-->
     <link href="https://fonts.googleapis.com/css?family=Saira+Extra+Condensed:500,700" rel="stylesheet" type="text/css" />
     <link href="https://fonts.googleapis.com/css?family=Muli:400,400i,800,800i" rel="stylesheet" type="text/css" />
@@ -15,22 +17,6 @@
 
 {% block page_js %}
     <script src="{% static 'vitae/js/scripts.js' %}"></script>
-    <script>
-
-        function addSection(sectionName) {
-            var request = new XMLHttpRequest();
-            request.onreadystatechange = function() {
-                if (this.readyState == 4 && this.status == 200) {
-                    document.getElementById("modal-form-div").innerHTML = this.responseText;
-                    console.log(this.responseText)
-                }
-            };
-
-            console.log(sectionName)
-            request.open("GET", "/getAddSectionForm/" + sectionName, true);
-            request.send();
-        }
-    </script>
 {% endblock %}
 
 
@@ -39,7 +25,7 @@
         <!-- Navigation-->
         <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top" id="sideNav">
             <a class="navbar-brand js-scroll-trigger" href="#page-top">
-                <span class="d-block d-lg-none">{{ firstName }} {{ lastName }}</span>
+                <span class="d-block d-lg-none">{{ profileOwner.first_name }} {{ profileOwner.last_name }}</span>
                 <span class="d-none d-lg-block">
                     <img class="img-fluid img-profile rounded-circle mx-auto mb-2" src="{% static 'vitae/assets/img/defaultProfilePic.jpg' %}" alt="" />
                 </span>
@@ -50,11 +36,18 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav">
                     <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#about">About</a></li>
-                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#experience">Experience</a></li>
-                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#education">Education</a></li>
-                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#skills">Skills</a></li>
-                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#interests">Interests</a></li>
-                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#awards">Awards</a></li>
+                    {% if workElements|length > 0 %}
+                        <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#experience">Experience</a></li>
+                    {% endif %}
+                    {% if educationElements|length > 0 %}
+                        <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#education">Education</a></li>
+                    {% endif %}
+                    {% if projectElements|length > 0 %}
+                        <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#skills">Projects</a></li>
+                    {% endif %}
+                    {% if skillElements|length > 0 %}
+                        <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#skills">Skills</a></li>
+                    {% endif %}
                 </ul>
             </div>
         </nav>
@@ -68,6 +61,7 @@
                         <span class="text-primary">{{ profileOwner.last_name }}</span>
                     </h1>
                     <div class="subheading mb-5">
+                        <!-- TODO: When should we get this info -->
                         5000 Forbes Ave · Pittsburgh, PA 15213 · (888) 888-8888 ·
                         <a href="mailto:name@email.com">{{ profileOwner.email }}</a>
                     </div>
@@ -88,154 +82,238 @@
                         </button>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                             <!-- TODO: Only show this if profile user == logged in user -->
-                            <button data-toggle="modal" data-target="#addSectionPopup"
-                                    class="dropdown-item" onclick="addSection('Work Experience')">Work Experience</button>
-                            <button data-toggle="modal" data-target="#addSectionPopup"
-                                    class="dropdown-item" onclick="addSection('Education')">Education</button>
-                            <button data-toggle="modal" data-target="#addSectionPopup"
-                                    class="dropdown-item" onclick="addSection('Projects')">Projects</button>
-                            <button data-toggle="modal" data-target="#addSectionPopup"
-                                    class="dropdown-item" onclick="addSection('Skills')">Skills</button>
+                            <button data-toggle="modal" data-target="#addWorkExperiencePopup"
+                                    class="dropdown-item">Work Experience</button>
+                            <button data-toggle="modal" data-target="#addEducationPopup"
+                                    class="dropdown-item">Education</button>
+                            <button data-toggle="modal" data-target="#addProjectPopup"
+                                    class="dropdown-item">Projects</button>
+                            <button data-toggle="modal" data-target="#addSkillPopup"
+                                    class="dropdown-item">Skills</button>
                         </div>
                     </div>
 
-                    <div class="modal fade" id="addSectionPopup" tabindex="-1" role="dialog" aria-labelledby="addSectionPopupLabel" aria-hidden="true">
-                        <div class="modal-dialog" role="document">
+                    <!-- One for each section sucks... TODO: Figure out how to automate -->
+                    <!-- TODO: Each popup should lead to a new endpoint? -->
+                    <div class="modal fade" id="addWorkExperiencePopup" tabindex="-1" role="dialog" aria-labelledby="addSectionPopupLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <h5 class="modal-title" id="addSectionPopupLabel">
-                                        Modal title
+                                        Add work experience
                                     </h5>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
                                     </button>
                                 </div>
-                                <div id="modal-form-div" class="modal-body">
-                                    <!-- Fill with AJAX -->
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                    <button type="button" class="btn btn-primary">Save changes</button>
-                                </div>
+                                <form method="POST" action="{{profileOwner}}/edit/work">
+                                    <div id="modal-form-div" class="modal-body">
+                                        {{ addWorkExperienceForm.non_field_errors }}
+                                        {% for field in addWorkExperienceForm %}
+                                            {{ field }}
+                                        {% endfor %}
+                                        {% csrf_token %}
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                        <button type="submit" class="btn btn-primary">Add work experience</button>
+                                    </div>
+                                </form>
                             </div>
                         </div>
                     </div>
+                    <div class="modal fade" id="addEducationPopup" tabindex="-1" role="dialog" aria-labelledby="addSectionPopupLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="addSectionPopupLabel">
+                                        Add education
+                                    </h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <form method="POST" action="{{profileOwner}}/edit/education">
+                                    <div id="modal-form-div" class="modal-body">
+                                        {{ addEducationForm.non_field_errors }}
+                                        {% for field in addEducationForm  %}
+                                            {{ field }}
+                                        {% endfor %}
+                                        {% csrf_token %}
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                        <button type="submit" class="btn btn-primary">Add education</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal fade" id="addProjectPopup" tabindex="-1" role="dialog" aria-labelledby="addSectionPopupLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="addSectionPopupLabel">
+                                        Add project
+                                    </h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <form method="POST" action="{{profileOwner}}/edit/project">
+                                    <div id="modal-form-div" class="modal-body">
+                                        {{ addProjectForm.non_field_errors }}
+                                        {% for field in addProjectForm  %}
+                                            {{ field }}
+                                        {% endfor %}
+                                        {% csrf_token %}
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                        <button type="submit" class="btn btn-primary">Add project</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal fade" id="addSkillPopup" tabindex="-1" role="dialog" aria-labelledby="addSectionPopupLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="addSectionPopupLabel">
+                                        Add skill
+                                    </h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <form method="POST" action="{{profileOwner}}/edit/skill">
+                                    <div id="modal-form-div" class="modal-body">
+                                        {{ addSkillForm.non_field_errors }}
+                                        {% for field in addSkillForm  %}
+                                            {{ field }}
+                                        {% endfor %}
+                                        {% csrf_token %}
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                        <button type="submit" class="btn btn-primary">Add skill</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- end of modals -->
 
                 </div>
             </section>
-            <hr class="m-0" />
-            <!-- Experience-->
-            <section class="resume-section" id="experience">
-                <div class="resume-section-content">
-                    <h2 class="mb-5">Experience</h2>
-                    <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
-                        <div class="flex-grow-1">
-                            <h3 class="mb-0">Experience 1</h3>
-                            <div class="subheading mb-3">Company</div>
-                            <p>What I did</p>
-                        </div>
-                        <div class="flex-shrink-0"><span class="text-primary">From - To</span></div>
+            {% if workElements|length > 0 %}
+                <hr class="m-0" />
+                <!-- Experience-->
+                <section class="resume-section" id="experience">
+                    <div class="resume-section-content">
+                        <h2 class="mb-5">Work Experience</h2>
+                        {% for element in workElements %}
+                            <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
+                                <div class="flex-grow-1">
+                                    <h3 class="mb-0">{{ element.job_title }}</h3>
+                                    <div class="subheading mb-3">{{ element.company_name }}</div>
+                                    <p>{{ element.description }}</p>
+                                </div>
+                                <div class="flex-shrink-0"><span class="text-primary">From - To</span></div>
+                            </div>
+                        {% endfor %}
                     </div>
-                    <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
-                        <div class="flex-grow-1">
-                            <h3 class="mb-0">Experience 2</h3>
-                            <div class="subheading mb-3">Company</div>
-                            <p>What I did</p>
-                        </div>
-                        <div class="flex-shrink-0"><span class="text-primary">From - To</span></div>
+                </section>
+            {% endif %}
+            {% if educationElements|length > 0 %}
+                <hr class="m-0" />
+                <!-- Education-->
+                <section class="resume-section" id="education">
+                    <div class="resume-section-content">
+                        <h2 class="mb-5">Education</h2>
+                        {% for element in educationElements %}
+                            <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
+                                <div class="flex-grow-1">
+                                    <h3 class="mb-0">{{ element.school_name }}</h3>
+                                    <div class="subheading mb-3">{{ element.school_location }}</div>
+                                    <div>{{ element.degree }}</div>
+                                    <p>GPA: {{ element.gpa }}</p>
+                                </div>
+                                <div class="flex-shrink-0"><span class="text-primary">Graduating {{ element.graduation_date }}</span></div>
+                            </div>
+                        {% endfor %}
                     </div>
-                    <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
-                        <div class="flex-grow-1">
-                            <h3 class="mb-0">Experience 3</h3>
-                            <div class="subheading mb-3">Company</div>
-                            <p>What I did</p>
-                        </div>
-                        <div class="flex-shrink-0"><span class="text-primary">From - To</span></div>
+                </section>
+            {% endif %}
+            {% if projectElements|length > 0 %}
+                <hr class="m-0" />
+                <!-- Projects -->
+                <section class="resume-section" id="experience">
+                    <div class="resume-section-content">
+                        <h2 class="mb-5">Projects</h2>
+                        {% for element in projectElements %}
+                            <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
+                                <div class="flex-grow-1">
+                                    <h3 class="mb-0">{{ element.name }}</h3>
+                                    <p>{{ element.description }}</p>
+                                </div>
+                                <div class="flex-shrink-0"><span class="text-primary">From - To</span></div>
+                            </div>
+                        {% endfor %}
                     </div>
-                </div>
-            </section>
-            <hr class="m-0" />
-            <!-- Education-->
-            <section class="resume-section" id="education">
-                <div class="resume-section-content">
-                    <h2 class="mb-5">Education</h2>
-                    <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
-                        <div class="flex-grow-1">
-                            <h3 class="mb-0">Carnegie Mellon University</h3>
-                            <div class="subheading mb-3">Bachelor of Science</div>
-                            <div>Electrical and Computer Engineering</div>
-                            <p>GPA: Infinite</p>
-                        </div>
-                        <div class="flex-shrink-0"><span class="text-primary">From - To</span></div>
+                </section>
+            {% endif %}
+            {% if skillElements|length > 0 %}
+                <hr class="m-0" />
+                <!-- Skills-->
+                <section class="resume-section" id="skills">
+                    <div class="resume-section-content">
+                        <h2 class="mb-5">Skills</h2>
+                        {% for element in skillElements %}
+                            <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
+                                <div class="flex-grow-1">
+                                    <h3 class="mb-0">{{ element.name }}</h3>
+                                    <div class="subheading mb-3">Proficiency: {{ element.proficiency }}/10</div>
+                                    <p>{{ element.description }}</p>
+                                </div>
+                                <div class="flex-shrink-0"><span class="text-primary">ICON</span></div>
+                            </div>
+                            <ul class="fa-ul mb-0">
+                                <li>
+                                    <span class="fa-li"><i class="fas fa-check"></i></span>
+                                    {{ element.name }} - {{ element.proficiency }}/10
+                                </li>
+                            </ul>
+                        {% endfor %}
+                        <!-- TODO: Add FontAwesome icon-picker to skills section -->
+                        <ul class="list-inline dev-icons">
+                            <li class="list-inline-item"><i class="fab fa-html5"></i></li>
+                            <li class="list-inline-item"><i class="fab fa-css3-alt"></i></li>
+                            <li class="list-inline-item"><i class="fab fa-js-square"></i></li>
+                            <li class="list-inline-item"><i class="fab fa-angular"></i></li>
+                            <li class="list-inline-item"><i class="fab fa-react"></i></li>
+                            <li class="list-inline-item"><i class="fab fa-node-js"></i></li>
+                            <li class="list-inline-item"><i class="fab fa-sass"></i></li>
+                            <li class="list-inline-item"><i class="fab fa-less"></i></li>
+                            <li class="list-inline-item"><i class="fab fa-wordpress"></i></li>
+                            <li class="list-inline-item"><i class="fab fa-gulp"></i></li>
+                            <li class="list-inline-item"><i class="fab fa-grunt"></i></li>
+                            <li class="list-inline-item"><i class="fab fa-npm"></i></li>
+                        </ul>
                     </div>
-                </div>
-            </section>
-            <hr class="m-0" />
-            <!-- Skills-->
-            <section class="resume-section" id="skills">
-                <div class="resume-section-content">
-                    <h2 class="mb-5">Skills</h2>
-                    <div class="subheading mb-3">Programming Languages & Tools</div>
-                    <ul class="list-inline dev-icons">
-                        <li class="list-inline-item"><i class="fab fa-html5"></i></li>
-                        <li class="list-inline-item"><i class="fab fa-css3-alt"></i></li>
-                        <li class="list-inline-item"><i class="fab fa-js-square"></i></li>
-                        <li class="list-inline-item"><i class="fab fa-angular"></i></li>
-                        <li class="list-inline-item"><i class="fab fa-react"></i></li>
-                        <li class="list-inline-item"><i class="fab fa-node-js"></i></li>
-                        <li class="list-inline-item"><i class="fab fa-sass"></i></li>
-                        <li class="list-inline-item"><i class="fab fa-less"></i></li>
-                        <li class="list-inline-item"><i class="fab fa-wordpress"></i></li>
-                        <li class="list-inline-item"><i class="fab fa-gulp"></i></li>
-                        <li class="list-inline-item"><i class="fab fa-grunt"></i></li>
-                        <li class="list-inline-item"><i class="fab fa-npm"></i></li>
-                    </ul>
-                    <div class="subheading mb-3">Workflow</div>
-                    <ul class="fa-ul mb-0">
-                        <li>
-                            <span class="fa-li"><i class="fas fa-check"></i></span>
-                            Mobile-First, Responsive Design
-                        </li>
-                        <li>
-                            <span class="fa-li"><i class="fas fa-check"></i></span>
-                            Cross Browser Testing & Debugging
-                        </li>
-                        <li>
-                            <span class="fa-li"><i class="fas fa-check"></i></span>
-                            Cross Functional Teams
-                        </li>
-                        <li>
-                            <span class="fa-li"><i class="fas fa-check"></i></span>
-                            Agile Development & Scrum
-                        </li>
-                    </ul>
-                </div>
-            </section>
-            <hr class="m-0" />
-            <!-- Interests-->
-            <section class="resume-section" id="interests">
-                <div class="resume-section-content">
-                    <h2 class="mb-5">Interests</h2>
-                    <p>Here are my interests</p>
-                </div>
-            </section>
-            <hr class="m-0" />
-            <!-- Awards-->
-            <section class="resume-section" id="awards">
-                <div class="resume-section-content">
-                    <h2 class="mb-5">Awards & Certifications</h2>
-                    <ul class="fa-ul mb-0">
-                        <li>
-                            <span class="fa-li"><i class="fas fa-trophy text-warning"></i></span>
-                            Award 1
-                        </li>
-                        <li>
-                            <span class="fa-li"><i class="fas fa-trophy text-warning"></i></span>
-                            Award 2
-                        </li>
-                    </ul>
-                </div>
-            </section>
+                </section>
+            {% endif %}
         </div>
     </body>
+{% endblock %}
+
+{% block end_js %}
+    <!-- Bootstrap core JS-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Third party plugin JS-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
+    <!-- Core theme JS-->
+    <script src="{% static 'vitae/js/scripts.js' %}"></script>
 {% endblock %}
