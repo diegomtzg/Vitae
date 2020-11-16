@@ -5,19 +5,19 @@ from django.contrib.auth import authenticate
 from vitae.models import *
 
 class RegisterForm(forms.Form):
-    firstName = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control', 'placeholder': 'First name'}))
-    lastName = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control', 'placeholder': 'Last name'}))
-    username = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control', 'placeholder': 'Username'}))
+    first_name = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control', 'placeholder': 'First name'}))
+    last_name = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control', 'placeholder': 'Last name'}))
     email = forms.EmailField(widget=forms.EmailInput(attrs={'class':'form-control', 'placeholder': 'Email'}))
+    username = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control', 'placeholder': 'Username'}))
     password = forms.CharField(widget=forms.PasswordInput(attrs={'class':'form-control', 'placeholder': 'Password'}))
-    confirmPassword = forms.CharField(widget=forms.PasswordInput(attrs={'class':'form-control', 'placeholder': 'Confirm password'}))
+    confirm_password = forms.CharField(widget=forms.PasswordInput(attrs={'class':'form-control', 'placeholder': 'Confirm password'}))
 
     def clean(self):
         clean_data = super().clean()
 
         # Verify that passwords match.
         pwd1 = clean_data['password']
-        pwd2 = clean_data['confirmPassword']
+        pwd2 = clean_data['confirm_password']
         if pwd1 and pwd2 and pwd1 != pwd2:
             raise forms.ValidationError("Passwords do not match.")
 
@@ -47,23 +47,51 @@ class LoginForm(forms.Form):
 
 class WorkExperienceForm(forms.ModelForm):
     class Meta:
-        model = WorkExperienceSection
-        exclude = ('sectionName',)
+        model = WorkExperienceElement
+        exclude = ('section',)
+        widgets = {
+            'company_name': forms.TextInput(attrs={'class': 'form-control','placeholder': 'Company name'}),
+            'job_title': forms.TextInput(attrs={'class': 'form-control','placeholder': 'Job title'}),
+            'start_date': forms.TextInput(attrs={'class': 'form-control','placeholder': 'Start date'}),
+            'end_date': forms.TextInput(attrs={'class': 'form-control','placeholder': 'End date'}),
+            'description': forms.Textarea(attrs={'class': 'form-control','rows': 2, 'placeholder': 'Role description'}),
+        }
 
 
 class EducationForm(forms.ModelForm):
     class Meta:
-        model = EducationSection
-        exclude = ('sectionName',)
+        model = EducationElement
+        exclude = ('section',)
+        widgets = {
+           'school_name': forms.TextInput(attrs={'class': 'form-control','placeholder': 'School name'}),
+           'school_location': forms.TextInput(attrs={'class': 'form-control','placeholder': 'School location'}),
+           'degree': forms.TextInput(attrs={'class': 'form-control','placeholder': 'Degree title'}),
+           'start_date': forms.TextInput(attrs={'class': 'form-control','placeholder': 'Start date'}),
+           'end_date': forms.TextInput(attrs={'class': 'form-control','placeholder': 'End date'}),
+           'gpa': forms.TextInput(attrs={'class': 'form-control','placeholder': 'GPA'}),
+           'graduation_date': forms.DateInput(attrs={'class': 'form-control','placeholder': 'Graduation date'}),
+        }
 
 
 class ProjectsForm(forms.ModelForm):
     class Meta:
-        model = ProjectsSection
-        exclude = ('sectionName',)
+        model = ProjectElement
+        exclude = ('section',)
+        widgets = {
+            'name': forms.TextInput(attrs={'class': 'form-control','placeholder': 'Project name'}),
+            'description': forms.TextInput(attrs={'class': 'form-control','placeholder': 'Project description'}),
+            'start_date': forms.TextInput(attrs={'class': 'form-control','placeholder': 'Start date'}),
+            'end_date': forms.TextInput(attrs={'class': 'form-control','placeholder': 'End date'})
+        }
 
 
 class SkillsForm(forms.ModelForm):
     class Meta:
-        model = SkillsSection
-        exclude = ('sectionName',)
+        model = SkillElement
+        exclude = ('section',)
+        widgets = {
+            'name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Skill name'}),
+            'proficiency': forms.NumberInput(attrs={'class': 'form-control', 'min': 1, 'max': 10, 'placeholder': 'Proficiency'})
+        }
+
+# TODO: Add forms for missing sections
