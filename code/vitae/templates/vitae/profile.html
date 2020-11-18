@@ -12,7 +12,7 @@
     <link href="https://fonts.googleapis.com/css?family=Muli:400,400i,800,800i" rel="stylesheet" type="text/css" />
     <!-- Core theme CSS (includes Bootstrap)-->
     {% load static %}
-    <link href="{% static 'vitae/css/styles.css' %}" rel="stylesheet" />
+    <link href="{% static 'vitae/css/styles.css' %}" rel="stylesheet" type="text/css" />
 {% endblock %}
 
 {% block page_js %}
@@ -43,7 +43,7 @@
                         <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#education">Education</a></li>
                     {% endif %}
                     {% if projectElements|length > 0 %}
-                        <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#skills">Projects</a></li>
+                        <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#projects">Projects</a></li>
                     {% endif %}
                     {% if skillElements|length > 0 %}
                         <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#skills">Skills</a></li>
@@ -65,7 +65,7 @@
                         5000 Forbes Ave · Pittsburgh, PA 15213 · (888) 888-8888 ·
                         <a href="mailto:name@email.com">{{ profileOwner.email }}</a>
                     </div>
-                    <p class="lead mb-5">Short Bio goes here</p>
+                    <p class="lead mb-5">User's short bio goes here</p>
                     <div class="social-icons">
                         <a class="social-icon" href="#"><i class="fab fa-linkedin-in"></i></a>
                         <a class="social-icon" href="#"><i class="fab fa-github"></i></a>
@@ -74,6 +74,7 @@
                     </div>
                     <!-- Add Section Dropdown -->
                     <!-- TODO: Disable option if section is already enabled -->
+                    <br>
                     <div class="dropdown">
                         <button class="btn btn-secondary dropdown-toggle" type="button"
                                 id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
@@ -216,11 +217,11 @@
                         {% for element in workElements %}
                             <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
                                 <div class="flex-grow-1">
-                                    <h3 class="mb-0">{{ element.job_title }}</h3>
-                                    <div class="subheading mb-3">{{ element.company_name }}</div>
+                                    <h3 class="mb-0">{{ element.company_name }}</h3>
+                                    <div class="subheading mb-3">{{ element.job_title }}</div>
                                     <p>{{ element.description }}</p>
                                 </div>
-                                <div class="flex-shrink-0"><span class="text-primary">From - To</span></div>
+                                <div class="flex-shrink-0"><span class="text-primary">{{ element.start_date }} - {{ element.end_date }}</span></div>
                             </div>
                         {% endfor %}
                     </div>
@@ -249,7 +250,7 @@
             {% if projectElements|length > 0 %}
                 <hr class="m-0" />
                 <!-- Projects -->
-                <section class="resume-section" id="experience">
+                <section class="resume-section" id="projects">
                     <div class="resume-section-content">
                         <h2 class="mb-5">Projects</h2>
                         {% for element in projectElements %}
@@ -258,7 +259,7 @@
                                     <h3 class="mb-0">{{ element.name }}</h3>
                                     <p>{{ element.description }}</p>
                                 </div>
-                                <div class="flex-shrink-0"><span class="text-primary">From - To</span></div>
+                                <div class="flex-shrink-0"><span class="text-primary">{{ element.start_date }} – {{ element.end_date }}</span></div>
                             </div>
                         {% endfor %}
                     </div>
