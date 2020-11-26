@@ -6,20 +6,31 @@
 
 {% block page_css %}
     {% load static %}
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" href="{% static 'vitae/css/signin.css' %}">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 {% endblock %}
 
 {% block content %}
     <body class="text-center">
-    <form class="form-signin" method="post" action="{% url 'register' %}">
-        {{ form.non_field_errors }}
-        {% for field in form %}
-            <label class="sr-only" for="{{field.label}}"></label>
-            {{ field }}
-        {% endfor %}
-        <button id="id_register_button" class="btn btn-lg btn-primary btn-block" type="submit">Register</button>
-        {% csrf_token %}
-    </form>
+    <div id="page-top">
+        <div class="container-fluid p-0">
+            <h1 class="mb-0">
+                Vitae<br>
+                <span class="text-primary">Register</span>
+            </h1>
+        </div>
+
+        <div class="container-fluid p-0">
+            <form class="form-signin" method="post" action="{% url 'register' %}">
+                {{ form.non_field_errors }}
+                {% for field in form %}
+                    <label class="sr-only" for="{{field.label}}"></label>
+                    {{ field }}
+                {% endfor %}
+                <button id="id_register_button" class="btn btn-lg btn-primary btn-block form-button" type="submit">Register</button>
+                {% csrf_token %}
+            </form>
+        </div>
+        </div>
     </body>
 {% endblock %}
