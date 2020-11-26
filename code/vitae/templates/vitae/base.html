@@ -5,15 +5,16 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         {% load static %}
         <link rel="icon" type="image/x-icon" href="{% static 'vitae/assets/img/favicon.ico' %}" />
-        {% block page_css %}{% endblock %}
+        <link href="https://fonts.googleapis.com/css?family=Saira+Extra+Condensed:500,700" rel="stylesheet" type="text/css" />
+        <link href="https://fonts.googleapis.com/css?family=Muli:400,400i,800,800i" rel="stylesheet" type="text/css" />
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
         <script src="https://use.fontawesome.com/releases/v5.15.1/js/all.js" crossorigin="anonymous"></script>
-        {% block page_js %}{% endblock %}
+        {% block page_css %}{% endblock %}
         <title>{% block page_title %}{% endblock %}</title>
     </head>
 
-    {% block content %}
-    {% endblock %}
-
-    {% block end_js %}
-    {% endblock %}
+    <body>
+        {% block content %}
+        {% endblock %}
+    </body>
 </html>

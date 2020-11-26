@@ -5,8 +5,8 @@
 
 {% block page_css %}
     {% load static %}
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" href="{% static 'vitae/css/signin.css' %}">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 {% endblock %}
 
 {% block content %}
@@ -17,7 +17,7 @@
                 <label class="sr-only" for="{{field.label}}"></label>
                 {{ field }}
             {% endfor %}
-            <button id="id_login_button" class="btn btn-lg btn-primary btn-block" type="submit">Login</button>
+            <button id="id_login_button" class="btn btn-lg btn-primary btn-block form-button" type="submit">Login</button>
             {% csrf_token %}
         </form>
     </body>

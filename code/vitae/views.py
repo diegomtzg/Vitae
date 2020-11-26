@@ -69,6 +69,11 @@ def registerAction(request):
     return redirect(reverse('profile', args=[newUser.username]))
 
 
+def searchAction(request):
+    if request.method == 'GET':
+        return render(request, 'vitae/search.html')
+
+
 @login_required
 def visitProfileAction(request, username):
     if request.method == 'GET':

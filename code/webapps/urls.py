@@ -14,16 +14,17 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path, include
+from django.urls import path
 from vitae import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', views.searchAction, name='search'),
     path('register/', views.registerAction, name='register'),
     path('login/', views.loginAction, name='login'),
-    path('photos/<str:username>', views.getPhoto, name='photo'),
-    path('profile/<str:username>', views.visitProfileAction, name='profile'),
-    path('profile/<str:username>/edit/<str:sectionName>', views.editProfile, name='editProfile'), # TODO: What if username is 'something/edit'? Need to check usernames
+    path('photos/<str:username>/', views.getPhoto, name='photo'),
+    path('profile/<str:username>/', views.visitProfileAction, name='profile'),
+    path('profile/<str:username>/edit/<str:sectionName>/', views.editProfile, name='editProfile'), # TODO: What if username is 'something/edit'? Need to check usernames
     # TODO: Also handle profile editing (currently just adding elements): need /profile/edit/section/elementId
 
     path('logout', views.debugLogout),
