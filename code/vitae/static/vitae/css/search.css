@@ -6,6 +6,7 @@ html, body {
   height: 100%;
   padding: 0;
   margin: 0;
+  overflow: hidden;
 }
 *, *:before, *:after {
   -webkit-tap-highlight-color: transparent;
@@ -34,30 +35,27 @@ main {
   width: 100%;
   height: 100%;
   background: rgba(154,57,163,1);
-  background: -moz-linear-gradient(-45deg, rgba(154,57,163,1) 0%, rgba(65,103,168,1) 100%);
-  background: -webkit-gradient(left top, right bottom, color-stop(0%, rgba(154,57,163,1)), color-stop(100%, rgba(65,103,168,1)));
-  background: -webkit-linear-gradient(-45deg, rgba(154,57,163,1) 0%, rgba(65,103,168,1) 100%);
-  background: -o-linear-gradient(-45deg, rgba(154,57,163,1) 0%, rgba(65,103,168,1) 100%);
-  background: -ms-linear-gradient(-45deg, rgba(154,57,163,1) 0%, rgba(65,103,168,1) 100%);
-  background: linear-gradient(135deg, rgba(154,57,163,1) 0%, rgba(65,103,168,1) 100%);
+  background: -moz-linear-gradient(-45deg, #bd5d38 0%, #ffffff 100%);
+  background: -webkit-gradient(left top, right bottom, color-stop(0%, #bd5d38), color-stop(100%, #ffffff));
+  background: -webkit-linear-gradient(-45deg, #bd5d38 0%, #ffffff 100%);
+  background: -o-linear-gradient(-45deg, #bd5d38 0%, #ffffff 100%);
+  background: -ms-linear-gradient(-45deg, #bd5d38 0%, #ffffff 100%);
+  background: linear-gradient(135deg, #bd5d38 0%, #95a2f8 100%);
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#9a39a3', endColorstr='#4167a8', GradientType=1 );
 }
-h1 {
-  display: block;
-  margin: 0 auto 25px auto;
-  text-align: center;
-  font-size: 1.92em;
-  font-weight: 600;
-  letter-spacing: -0.055em;
+h1, h2, h3, h4, h5, h6,
+.h1, .h2, .h3, .h4, .h5, .h6 {
+  margin-bottom: 0.5rem;
+  font-family: "Saira Extra Condensed", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  font-weight: 700;
+  line-height: 1.4;
+  color: #ffffff;
 }
-h2 {
-  display: block;
-  margin: 0 auto 60px auto;
-  text-align: center;
-  font-weight: 400;
-  font-size: 1.25em;
-  letter-spacing: -0.015em;
+
+h1, .h1 {
+  font-size: 8rem;
 }
+
 .container {
   position: relative;
   margin: calc(75px + 2vh + 2vw) auto 0 auto;
@@ -185,3 +183,7 @@ h2 {
 #search:-moz-placeholder {color: #FFFFFF;}
 #search::-moz-selection {color: #FFFFFF; background: rgba(0,0,0,0.25);}
 #search::selection {color: #FFFFFF; background: rgba(0,0,0,0.25);}
+
+.logo {
+  width: 15%;
+}
