@@ -17,7 +17,10 @@
                     <h2 class="title">Vitae - Register</h2>
                 </div>
                 <div class="card-body">
-                    <form method="POST" action="{% url 'login' %}">
+                    <form method="POST" action="{% url 'register' %}">
+                        <div class="form-row">
+                            {{ form.non_field_errors }}
+                        </div>
                         {% csrf_token %}
                         <div class="form-row m-b-55">
                             <div class="name">Name</div>
@@ -96,11 +99,4 @@
             <a class="nav-link" href="{% url 'register' %}">Register</a>
         </li>
     </ul>
-{% endblock %}
-
-{% block search-box %}
-    <form class="form-inline mt-2 mt-md-0">
-        <input class="form-control mr-sm-2" type="text" placeholder="Search Profiles" aria-label="Search">
-        <button class="btn btn-outline-warning my-2 my-sm-0" type="submit">Search</button>
-    </form>
 {% endblock %}

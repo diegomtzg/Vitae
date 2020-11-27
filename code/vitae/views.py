@@ -82,23 +82,16 @@ def visitProfileAction(request, username):
 
 
 @login_required
-def editProfile(request, username, sectionName):
+def editProfile(request, sectionName):
     """
     General class to handle any and all modifications to a user's profile.
-    @param username of the owner of the profile being edited
-    @param sectionName is the name of the section to which an element belongs/will belong to.
     @param TODO elementId identifier for the section element being modified or "new" if adding a new element. (Currently only adds new elements)
     """
-
-    # User can only edit their own profile (even if they modify the URL) # TODO: Is this fully safe?
-    if username != request.user.username:
-        return render(request, 'vitae/profile.html', getProfileContext(request.user))
 
     profile = request.user.profile
     if sectionName == 'work':
         form = WorkExperienceForm(request.POST)
         if not form.is_valid():
-            # TODO: Whenever these forms aren't valid, create an error message as a popup on profile page.
             context = getProfileContext(request.user)
             context['addWorkExperienceForm'] = form
             return redirect(reverse('profile', args=[request.user]))
@@ -190,11 +183,4 @@ def getProfileContext(profileOwner):
 @login_required
 def logoutAction(request):
     logout(request)
-    return redirect(reverse('login'))
-
-# Used temporarily for debugging...
-def debugDelete(request):
-    print("Deleting everything...")
-    User.objects.all().delete()
-    logout(request)
-    return redirect(reverse('register'))
+    return redirect(reverse('search'))
