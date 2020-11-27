@@ -1,6 +1,6 @@
 body {
   padding-top: 3.375rem;
-  color: #ffffff;
+  color: #6c757d;
 }
 
 .m-0 {
@@ -103,7 +103,13 @@ p.lead {
   margin-right: 0;
 }
 .social-icons .social-icon:hover {
-  background-color: #bd5d38;
+  background: #bd5d38;
+  background: -moz-linear-gradient(-45deg, #bd5d38 0%, #2d46e3 120%);
+  background: -webkit-gradient(left top, right bottom, color-stop(0%, #bd5d38), color-stop(120%, #2d46e3));
+  background: -webkit-linear-gradient(-45deg, #bd5d38 0%, #2d46e3 120%);
+  background: -o-linear-gradient(-45deg, #bd5d38 0%, #2d46e3 120%);
+  background: -ms-linear-gradient(-45deg, #bd5d38 0%, #2d46e3 120%);
+  background: linear-gradient(135deg, #bd5d38 0%, #2d46e3 120%);
 }
 
 .dev-icons {
@@ -150,15 +156,40 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
     font-family: "Saira Extra Condensed", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
     font-weight: 700;
     line-height: 1.2;
-    color: #ffffff;
+    color: #343a40;
 }
 
-main {
-  background: -moz-linear-gradient(-45deg, #ffffff 0%, #95a2f8 100%);
-  background: -webkit-gradient(left top, right bottom, color-stop(0%, #ffffff), color-stop(100%, #95a2f8));
-  background: -webkit-linear-gradient(-45deg, #ffffff 0%, #95a2f8 100%);
-  background: -o-linear-gradient(-45deg, #ffffff 0%, #95a2f8 100%);
-  background: -ms-linear-gradient(-45deg, #ffffff 0%, #95a2f8 100%);
-  background: linear-gradient(270deg, #ffffff 0%, #007bff 100%);
+.primary-bg {
+  background-color: #bd5d38;
+}
+
+.secondary-bg {
+  background-color: #495057;
+}
+
+.gradient-text {
+  background: #bd5d38;
+  background: -moz-linear-gradient(-45deg, #bd5d38 0%, #2d46e3 100%);
+  background: -webkit-gradient(left top, right bottom, color-stop(0%, #bd5d38), color-stop(100%, #2d46e3));
+  background: -webkit-linear-gradient(-45deg, #bd5d38 0%, #2d46e3 100%);
+  background: -o-linear-gradient(-45deg, #bd5d38 0%, #2d46e3 100%);
+  background: -ms-linear-gradient(-45deg, #bd5d38 0%, #2d46e3 100%);
+  background: linear-gradient(135deg, #bd5d38 0%, #2d46e3 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+a.gradient-text:hover {
+  color: #495057;
+}
+
+.gradient-bg {
+  background: #bd5d38;
+  background: -moz-linear-gradient(-45deg, #bd5d38 0%, #2d46e3 120%);
+  background: -webkit-gradient(left top, right bottom, color-stop(0%, #bd5d38), color-stop(120%, #2d46e3));
+  background: -webkit-linear-gradient(-45deg, #bd5d38 0%, #2d46e3 120%);
+  background: -o-linear-gradient(-45deg, #bd5d38 0%, #2d46e3 120%);
+  background: -ms-linear-gradient(-45deg, #bd5d38 0%, #2d46e3 120%);
+  background: linear-gradient(135deg, #bd5d38 0%, #2d46e3 120%);
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#9a39a3', endColorstr='#4167a8', GradientType=1 );
 }

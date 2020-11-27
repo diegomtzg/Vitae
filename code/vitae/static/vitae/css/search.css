@@ -34,14 +34,13 @@ main {
   padding: 0 26px;
   width: 100%;
   height: 100%;
-  background: rgba(154,57,163,1);
-  background: -moz-linear-gradient(-45deg, #bd5d38 0%, #95a2f8 100%);
-  background: -webkit-gradient(left top, right bottom, color-stop(0%, #bd5d38), color-stop(100%, #95a2f8));
-  background: -webkit-linear-gradient(-45deg, #bd5d38 0%, #95a2f8 100%);
-  background: -o-linear-gradient(-45deg, #bd5d38 0%, #95a2f8 100%);
-  background: -ms-linear-gradient(-45deg, #bd5d38 0%, #95a2f8 100%);
-  background: linear-gradient(135deg, #bd5d38 0%, #95a2f8 100%);
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#9a39a3', endColorstr='#4167a8', GradientType=1 );
+  background: #bd5d38;
+  background: -moz-linear-gradient(-45deg, #bd5d38 0%, #2d46e3 120%);
+  background: -webkit-gradient(left top, right bottom, color-stop(0%, #bd5d38), color-stop(120%, #2d46e3));
+  background: -webkit-linear-gradient(-45deg, #bd5d38 0%, #2d46e3 120%);
+  background: -o-linear-gradient(-45deg, #bd5d38 0%, #2d46e3 120%);
+  background: -ms-linear-gradient(-45deg, #bd5d38 0%, #2d46e3 120%);
+  background: linear-gradient(135deg, #bd5d38 0%, #2d46e3 120%);
 }
 
 h1, h2, h3, h4, h5, h6,

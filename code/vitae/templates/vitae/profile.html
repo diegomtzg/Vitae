@@ -26,7 +26,7 @@
 {% block profile-nav %}
     <!-- Navigation-->
     <div class="wrapper">
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top" id="sideNav">
+    <nav class="navbar navbar-expand-lg navbar-dark gradient-bg fixed-top" id="sideNav">
         <a class="navbar-brand js-scroll-trigger" href="#page-top">
             <span class="d-block d-lg-none">{{ profileOwner.first_name }} {{ profileOwner.last_name }}</span>
             <span class="d-none d-lg-block">
@@ -66,12 +66,13 @@
                 <div class="resume-section-content">
                     <h1 class="mb-0">
                         {{ profileOwner.first_name }}
-                        <span class="text-primary">{{ profileOwner.last_name }}</span>
+                        <span class="gradient-text">{{ profileOwner.last_name }}</span>
                     </h1>
+                    <i class="title-icon fas fa-edit"></i>
                     <div class="subheading mb-5">
                         <!-- TODO: When should we get this info -->
                         5000 Forbes Ave · Pittsburgh, PA 15213 · (888) 888-8888 ·
-                        <a href="mailto:name@email.com">{{ profileOwner.email }}</a>
+                        <a class="gradient-text" href="mailto:name@email.com">{{ profileOwner.email }}</a>
                     </div>
                     <p class="lead mb-5">User's short bio goes here</p>
                     <div class="social-icons">
@@ -82,12 +83,11 @@
                     </div>
                     <!-- Add Section Dropdown -->
                     {% if user.get_username == profileOwner.username %}
-                        <br>
                         <div class="dropdown">
                             <button class="btn btn-secondary dropdown-toggle" type="button"
                                     id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
                                     aria-expanded="false" >
-                                Add profile section
+                                Add section
                             </button>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                             <button data-toggle="modal" data-target="#addWorkExperiencePopup"
@@ -315,6 +315,7 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
+        <script src="{% static 'vitae/js/jquery.bootstrap.modal.forms.js' %}"></script>
         <script src="{% static 'vitae/js/scripts.js' %}"></script>
     </div>
 {% endblock %}
