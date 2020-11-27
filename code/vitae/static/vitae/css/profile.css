@@ -1,6 +1,10 @@
 body {
   padding-top: 3.375rem;
-  color: #6c757d;
+  color: #ffffff;
+}
+
+.m-0 {
+  border-top: 2px solid white;
 }
 
 @media (min-width: 992px) {
@@ -146,5 +150,15 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
     font-family: "Saira Extra Condensed", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
     font-weight: 700;
     line-height: 1.2;
-    color: #343a40;
+    color: #ffffff;
+}
+
+main {
+  background: -moz-linear-gradient(-45deg, #ffffff 0%, #95a2f8 100%);
+  background: -webkit-gradient(left top, right bottom, color-stop(0%, #ffffff), color-stop(100%, #95a2f8));
+  background: -webkit-linear-gradient(-45deg, #ffffff 0%, #95a2f8 100%);
+  background: -o-linear-gradient(-45deg, #ffffff 0%, #95a2f8 100%);
+  background: -ms-linear-gradient(-45deg, #ffffff 0%, #95a2f8 100%);
+  background: linear-gradient(270deg, #ffffff 0%, #007bff 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#9a39a3', endColorstr='#4167a8', GradientType=1 );
 }

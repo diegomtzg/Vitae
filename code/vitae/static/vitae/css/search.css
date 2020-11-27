@@ -43,6 +43,7 @@ main {
   background: linear-gradient(135deg, #bd5d38 0%, #95a2f8 100%);
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#9a39a3', endColorstr='#4167a8', GradientType=1 );
 }
+
 h1, h2, h3, h4, h5, h6,
 .h1, .h2, .h3, .h4, .h5, .h6 {
   margin-bottom: 0.5rem;
