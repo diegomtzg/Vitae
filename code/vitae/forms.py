@@ -5,12 +5,12 @@ from django.contrib.auth import authenticate
 from vitae.models import *
 
 class RegisterForm(forms.Form):
-    first_name = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control', 'placeholder': 'First name'}))
-    last_name = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control', 'placeholder': 'Last name'}))
-    email = forms.EmailField(widget=forms.EmailInput(attrs={'class':'form-control', 'placeholder': 'Email'}))
-    username = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control', 'placeholder': 'Username'}))
-    password = forms.CharField(widget=forms.PasswordInput(attrs={'class':'form-control', 'placeholder': 'Password'}))
-    confirm_password = forms.CharField(widget=forms.PasswordInput(attrs={'class':'form-control', 'placeholder': 'Confirm password'}))
+    first_name = forms.CharField(widget=forms.TextInput(attrs={'class':'input--style-5'}))
+    last_name = forms.CharField(widget=forms.TextInput(attrs={'class':'input--style-5'}))
+    email = forms.EmailField(widget=forms.EmailInput(attrs={'class':'input--style-5'}))
+    username = forms.CharField(widget=forms.TextInput(attrs={'class':'input--style-5'}))
+    password = forms.CharField(widget=forms.PasswordInput(attrs={'class':'input--style-5'}))
+    confirm_password = forms.CharField(widget=forms.PasswordInput(attrs={'class':'input--style-5'}))
 
     def clean(self):
         clean_data = super().clean()
@@ -30,8 +30,8 @@ class RegisterForm(forms.Form):
 
 
 class LoginForm(forms.Form):
-    username = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control', 'placeholder': 'Username'}))
-    password = forms.CharField(widget=forms.PasswordInput(attrs={'class':'form-control', 'placeholder': 'Password'}))
+    username = forms.CharField(widget=forms.TextInput(attrs={'class':'input--style-5', 'placeholder': 'Username'}))
+    password = forms.CharField(widget=forms.PasswordInput(attrs={'class':'input--style-5', 'placeholder': 'Password'}))
 
     def clean(self):
         clean_data = super().clean()

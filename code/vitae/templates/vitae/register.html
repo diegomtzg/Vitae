@@ -6,35 +6,83 @@
 
 {% block page_css %}
     {% load static %}
-    <link rel="stylesheet" href="{% static 'vitae/css/signin.css' %}">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link href="{% static 'vitae/css/signup.css' %}" rel="stylesheet" media="all">
 {% endblock %}
 
 {% block content %}
-    <body class="text-center">
-    <div id="page-top">
-        <div class="container-fluid p-0">
-            <h1 class="mb-0">
-                Vitae<br>
-                <span class="text-primary">Register</span>
-            </h1>
+    <div class="container">
+        <div class="wrapper wrapper--w790 p-t-100">
+            <div class="card card-5">
+                <div class="card-heading">
+                    <h2 class="title">Vitae - Register</h2>
+                </div>
+                <div class="card-body">
+                    <form method="POST" action="{% url 'login' %}">
+                        {% csrf_token %}
+                        <div class="form-row m-b-55">
+                            <div class="name">Name</div>
+                            <div class="value">
+                                <div class="row row-space">
+                                    <div class="col">
+                                        <div class="input-group-desc">
+                                            {{ form.first_name }}
+                                            <label class="label--desc">first name</label>
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="input-group-desc">
+                                            {{ form.last_name }}
+                                            <label class="label--desc">last name</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="name">Email</div>
+                            <div class="value">
+                                <div class="input-group">
+                                    {{ form.email }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="name">Username</div>
+                            <div class="value">
+                                <div class="input-group">
+                                    {{ form.username }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row m-b-55">
+                            <div class="name">Password</div>
+                            <div class="value">
+                                <div class="row row-space">
+                                    <div class="col">
+                                        <div class="input-group-desc">
+                                            {{ form.password }}
+                                            <label class="label--desc">password</label>
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="input-group-desc">
+                                            {{ form.confirm_password }}
+                                            <label class="label--desc">confirm password</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <button class="btn btn--radius-2 btn--red" type="submit">Register</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
-
-        <div class="container-fluid p-0">
-            <form class="form-signin" method="post" action="{% url 'register' %}">
-                {{ form.non_field_errors }}
-                {% for field in form %}
-                    <label class="sr-only" for="{{field.label}}"></label>
-                    {{ field }}
-                {% endfor %}
-                <button id="id_register_button" class="btn btn-lg btn-primary btn-block form-button" type="submit">Register</button>
-                {% csrf_token %}
-            </form>
-        </div>
-        </div>
+    </div>
     </body>
 {% endblock %}
-
 
 {% block nav-links %}
     <ul class="navbar-nav mr-auto">
