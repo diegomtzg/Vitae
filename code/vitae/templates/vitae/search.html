@@ -11,7 +11,6 @@
 {% endblock %}
 
 {% block content %}
-    <main>
     <div class="container h-100">
         <div class="row text-center mx-auto d-block">
             <img class="logo" src="{% static 'vitae/assets/img/cv.svg' %}">
@@ -39,7 +38,20 @@
     </div>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
         <script src="{% static 'vitae/js/search.js' %}"></script>
-    </main>
+{% endblock %}
+
+{% block nav-links %}
+    <ul class="navbar-nav mr-auto">
+        <li class="nav-item active">
+            <a class="nav-link" href="/"><i class="fas fa-home"></i></a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'login' %}">Login<span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'register' %}">Register</a>
+        </li>
+    </ul>
 {% endblock %}
 
 

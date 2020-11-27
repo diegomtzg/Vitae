@@ -5,20 +5,173 @@
 
 {% block page_css %}
     {% load static %}
-    <link rel="stylesheet" href="{% static 'vitae/css/signin.css' %}">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link href="{% static 'vitae/css/search.css' %}" rel="stylesheet" media="all">
 {% endblock %}
 
 {% block content %}
-    <body class="text-center">
-        <form class="form-signin" method="post" action="{% url 'login' %}">
-            {{ form.non_field_errors }}
-            {% for field in form %}
-                <label class="sr-only" for="{{field.label}}"></label>
-                {{ field }}
-            {% endfor %}
-            <button id="id_login_button" class="btn btn-lg btn-primary btn-block form-button" type="submit">Login</button>
-            {% csrf_token %}
-        </form>
-    </body>
+    <div class="container h-100">
+        <div class="row text-center mx-auto d-block">
+            <img class="logo" src="{% static 'vitae/assets/img/cv.svg' %}">
+            <h1 class="mb-0">VITAE</h1>
+        </div>
+
+
+        <div class="wrapper wrapper--w790">
+            <div class="card card-5">
+                <div class="card-heading">
+                    <h2 class="title">Event Registration Form</h2>
+                </div>
+                <div class="card-body">
+                    <form method="POST">
+                        <div class="form-row m-b-55">
+                            <div class="name">Name</div>
+                            <div class="value">
+                                <div class="row row-space">
+                                    <div class="col">
+                                        <div class="input-group-desc">
+                                            <input class="input--style-5" type="text" name="first_name">
+                                            <label class="label--desc">first name</label>
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="input-group-desc">
+                                            <input class="input--style-5" type="text" name="last_name">
+                                            <label class="label--desc">last name</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="name">Company</div>
+                            <div class="value">
+                                <div class="input-group">
+                                    <input class="input--style-5" type="text" name="company">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="name">Email</div>
+                            <div class="value">
+                                <div class="input-group">
+                                    <input class="input--style-5" type="email" name="email">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row m-b-55">
+                            <div class="name">Phone</div>
+                            <div class="value">
+                                <div class="row row-refine">
+                                    <div class="col">
+                                        <div class="input-group-desc">
+                                            <input class="input--style-5" type="text" name="phone">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <button class="btn btn--radius-2 btn--red" type="submit">Register</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+
+
+
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="{% static 'vitae/js/search.js' %}"></script>
+
+
+
+
+
+    <div class="page-wrapper bg-gra-03 p-t-45 p-b-50">
+        <div class="wrapper wrapper--w790">
+            <div class="card card-5">
+                <div class="card-heading">
+                    <h2 class="title">Event Registration Form</h2>
+                </div>
+                <div class="card-body">
+                    <form method="POST">
+                        <div class="form-row m-b-55">
+                            <div class="name">Name</div>
+                            <div class="value">
+                                <div class="row row-space">
+                                    <div class="col">
+                                        <div class="input-group-desc">
+                                            <input class="input--style-5" type="text" name="first_name">
+                                            <label class="label--desc">first name</label>
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="input-group-desc">
+                                            <input class="input--style-5" type="text" name="last_name">
+                                            <label class="label--desc">last name</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="name">Company</div>
+                            <div class="value">
+                                <div class="input-group">
+                                    <input class="input--style-5" type="text" name="company">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="name">Email</div>
+                            <div class="value">
+                                <div class="input-group">
+                                    <input class="input--style-5" type="email" name="email">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row m-b-55">
+                            <div class="name">Phone</div>
+                            <div class="value">
+                                <div class="row row-refine">
+                                    <div class="col">
+                                        <div class="input-group-desc">
+                                            <input class="input--style-5" type="text" name="phone">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <button class="btn btn--radius-2 btn--red" type="submit">Register</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+{% endblock %}
+
+{% block nav-links %}
+    <li class="nav-item">
+        <a class="nav-link" href="/"><i class="fas fa-home"></i></a>
+    </li>
+    <ul class="navbar-nav mr-auto">
+        <li class="nav-item active">
+            <a class="nav-link" href="{% url 'login' %}">Login<span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'register' %}">Register</a>
+        </li>
+    </ul>
+{% endblock %}
+
+{% block search-box %}
+    <form class="form-inline mt-2 mt-md-0">
+        <input class="form-control mr-sm-2" type="text" placeholder="Search Profiles" aria-label="Search">
+        <button class="btn btn-outline-warning my-2 my-sm-0" type="submit">Search</button>
+    </form>
 {% endblock %}
