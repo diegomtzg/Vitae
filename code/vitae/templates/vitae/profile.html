@@ -1,19 +1,12 @@
 {% extends 'vitae/base.html' %}
 
 {% block page_title %}
-    {{ profileOwner.first_name }} {{ profileOwner.last_name }}
+    {{ profileOwner.first_name }} {{ profileOwner.last_name }} | Vitae
 {% endblock %}
 
 {% block page_css %}
     {% load static %}
     <link href="{% static 'vitae/css/profile.css' %}" rel="stylesheet" type="text/css" />
-{% endblock %}
-
-{% block search-box %}
-    <form class="form-inline mt-2 mt-md-0">
-        <input class="form-control mr-sm-2" type="text" placeholder="Search Profiles" aria-label="Search">
-        <button class="btn btn-outline-warning my-2 my-sm-0" type="submit">Search</button>
-    </form>
 {% endblock %}
 
 {% block nav-links %}
@@ -32,6 +25,7 @@
 
 {% block profile-nav %}
     <!-- Navigation-->
+    <div class="wrapper">
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top" id="sideNav">
         <a class="navbar-brand js-scroll-trigger" href="#page-top">
             <span class="d-block d-lg-none">{{ profileOwner.first_name }} {{ profileOwner.last_name }}</span>
@@ -60,6 +54,7 @@
             </ul>
         </div>
     </nav>
+    </div>
 {% endblock %}
 
 {% block content %}
@@ -86,16 +81,15 @@
                         <a class="social-icon" href="#"><i class="fab fa-facebook-f"></i></a>
                     </div>
                     <!-- Add Section Dropdown -->
-                    <!-- TODO: Disable option if section is already enabled -->
-                    <br>
-                    <div class="dropdown">
-                        <button class="btn btn-secondary dropdown-toggle" type="button"
-                                id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
-                                aria-expanded="false" >
-                            Add profile section
-                        </button>
+                    {% if user.get_username == profileOwner.username %}
+                        <br>
+                        <div class="dropdown">
+                            <button class="btn btn-secondary dropdown-toggle" type="button"
+                                    id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+                                    aria-expanded="false" >
+                                Add profile section
+                            </button>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            <!-- TODO: Only show this if profile user == logged in user -->
                             <button data-toggle="modal" data-target="#addWorkExperiencePopup"
                                     class="dropdown-item">Work Experience</button>
                             <button data-toggle="modal" data-target="#addEducationPopup"
@@ -106,9 +100,8 @@
                                     class="dropdown-item">Skills</button>
                         </div>
                     </div>
+                    {% endif %}
 
-                    <!-- One for each section sucks... TODO: Figure out how to automate -->
-                    <!-- TODO: Each popup should lead to a new endpoint? -->
                     <div class="modal fade" id="addWorkExperiencePopup" tabindex="-1" role="dialog" aria-labelledby="addSectionPopupLabel" aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered" role="document">
                             <div class="modal-content">
@@ -120,7 +113,7 @@
                                         <span aria-hidden="true">&times;</span>
                                     </button>
                                 </div>
-                                <form method="POST" action="{{profileOwner}}/edit/work">
+                                <form method="POST" action="{% url 'editProfile' 'work' %}">
                                     <div id="modal-form-div" class="modal-body">
                                         {{ addWorkExperienceForm.non_field_errors }}
                                         {% for field in addWorkExperienceForm %}
@@ -147,7 +140,7 @@
                                         <span aria-hidden="true">&times;</span>
                                     </button>
                                 </div>
-                                <form method="POST" action="{{profileOwner}}/edit/education">
+                                <form method="POST" action="{% url 'editProfile' 'education' %}">
                                     <div id="modal-form-div" class="modal-body">
                                         {{ addEducationForm.non_field_errors }}
                                         {% for field in addEducationForm  %}
@@ -174,7 +167,7 @@
                                         <span aria-hidden="true">&times;</span>
                                     </button>
                                 </div>
-                                <form method="POST" action="{{profileOwner}}/edit/project">
+                                <form method="POST" action="{% url 'editProfile' 'project' %}">
                                     <div id="modal-form-div" class="modal-body">
                                         {{ addProjectForm.non_field_errors }}
                                         {% for field in addProjectForm  %}
@@ -201,7 +194,7 @@
                                         <span aria-hidden="true">&times;</span>
                                     </button>
                                 </div>
-                                <form method="POST" action="{{profileOwner}}/edit/skill">
+                                <form method="POST" action="{% url 'editProfile' 'skill' %}">
                                     <div id="modal-form-div" class="modal-body">
                                         {{ addSkillForm.non_field_errors }}
                                         {% for field in addSkillForm  %}
@@ -319,12 +312,9 @@
                 </section>
             {% endif %}
         </div>
-        <!-- Bootstrap core JS-->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"></script>
-        <!-- Third party plugin JS-->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
-        <!-- Core theme JS-->
         <script src="{% static 'vitae/js/scripts.js' %}"></script>
     </div>
 {% endblock %}

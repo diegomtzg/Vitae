@@ -24,8 +24,6 @@ urlpatterns = [
     path('login/', views.loginAction, name='login'),
     path('photos/<str:username>/', views.getPhoto, name='photo'),
     path('profile/<str:username>/', views.visitProfileAction, name='profile'),
-    path('profile/<str:username>/edit/<str:sectionName>/', views.editProfile, name='editProfile'), # TODO: What if username is 'something/edit'? Need to check usernames
+    path('profile/edit/<str:sectionName>', views.editProfile, name='editProfile'),
     path('logout', views.logoutAction, name='logout'),
-
-    path('delete', views.debugDelete),
 ]
