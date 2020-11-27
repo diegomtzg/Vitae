@@ -73,7 +73,24 @@ def searchAction(request):
     if request.method == 'GET':
         return render(request, 'vitae/search.html')
 
+def profileSearch(query):
+    """
+    Conducts a search through all profiles for keywords in query and
+    returns list of all usernames matching some portion of the query.
+    @param query:
+    @return: List of string usernames of profiles matching search query.
+    """
+    print("Entered Profile Search.")
 
+    allProfiles = User.objects.all()
+    print(allProfiles[0])
+    pass
+
+def serializeProfile(profile):
+    pass
+
+
+@login_required
 def visitProfileAction(request, username):
     if request.method == 'GET':
         user = get_object_or_404(User, username=username)
