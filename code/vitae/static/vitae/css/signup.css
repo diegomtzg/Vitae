@@ -328,7 +328,7 @@ h6 {
    ========================================================================== */
 .wrapper {
   margin: 0 auto;
-  margin-top: 100px;
+  margin-top: 50px;
 }
 
 .wrapper--w960 {
@@ -352,8 +352,8 @@ h6 {
    ========================================================================== */
 .btn {
   display: inline-block;
-  line-height: 50px;
-  padding: 0 50px;
+  line-height: 2.5em;
+  padding: 0 20px;
   -webkit-transition: all 0.4s ease;
   -o-transition: all 0.4s ease;
   -moz-transition: all 0.4s ease;

@@ -11,6 +11,22 @@
         <link href="https://fonts.googleapis.com/css?family=Montserrat+Alternates:300,400,500,600" rel="stylesheet">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
         <script src="https://use.fontawesome.com/releases/v5.15.1/js/all.js" crossorigin="anonymous"></script>
+        <style>
+            .logo-inline {
+                height: 1.8em;
+                padding-right: 0.5em;
+            }
+            .navbar-brand {
+                padding-right: 100px;
+            }
+
+            .nav-item {
+                font-family: 'Montserrat Alternates', sans-serif;
+                font-size: 1.32em;
+                font-weight: 400;
+                letter-spacing: -0.015em;
+            }
+        </style>
         {% block page_css %}{% endblock %}
         <title>{% block page_title %}{% endblock %}</title>
     </head>
@@ -21,7 +37,8 @@
     {% endblock %}
 
     <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-        <a class="navbar-brand" href="/">Vitae</a>
+        <img class="logo-inline" src="{% static 'vitae/assets/img/cv.svg' %}">
+        <a class="navbar-brand" href="/">  Vitae</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
