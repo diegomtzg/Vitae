@@ -74,7 +74,6 @@ def searchAction(request):
         return render(request, 'vitae/search.html')
 
 
-@login_required
 def visitProfileAction(request, username):
     if request.method == 'GET':
         user = get_object_or_404(User, username=username)
@@ -188,19 +187,12 @@ def getProfileContext(profileOwner):
     return context
 
 
-def getProfileElements(profileOwner):
-    """
-    Returns all section elements from all the profile sections as a dictionary.
-    """
-
-
-    print(workElements)
-
-
-# Used temporarily for debugging...
-def debugLogout(request):
+@login_required
+def logoutAction(request):
     logout(request)
     return redirect(reverse('login'))
+
+# Used temporarily for debugging...
 def debugDelete(request):
     print("Deleting everything...")
     User.objects.all().delete()
