@@ -194,3 +194,7 @@ a.gradient-text:hover {
   background: linear-gradient(135deg, #bd5d38 0%, #2d46e3 120%);
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#9a39a3', endColorstr='#4167a8', GradientType=1 );
 }
+
+.title-icon {
+  font-size: 60%;
+}
