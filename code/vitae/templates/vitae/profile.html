@@ -226,8 +226,11 @@
                         {% for element in workElements %}
                             <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
                                 <div class="flex-grow-1">
-                                    <h3 class="mb-0 gradient-text">{{ element.company_name }}
+                                    <h3 class="mb-0">
+                                        <span class="gradient-text">{{ element.company_name }}</span>
+                                        – Mountain View, CA{{ element.location }}
                                         <i class="title-icon fas fa-edit"></i>
+                                        </h3>
                                     </h3>
                                     <div class="subheading mb-3">{{ element.job_title }}</div>
                                     <p>{{ element.description }}</p>

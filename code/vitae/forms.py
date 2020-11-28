@@ -62,6 +62,7 @@ class WorkExperienceForm(forms.ModelForm):
         widgets = {
             'company_name': forms.TextInput(attrs={'class': 'form-control','placeholder': 'Company name'}),
             'job_title': forms.TextInput(attrs={'class': 'form-control','placeholder': 'Job title'}),
+            'location': forms.TextInput(attrs={'class': 'form-control','placeholder': 'Location'}),
             'start_date': forms.TextInput(attrs={'class': 'form-control','placeholder': 'Start date'}),
             'end_date': forms.TextInput(attrs={'class': 'form-control','placeholder': 'End date'}),
             'description': forms.Textarea(attrs={'class': 'form-control','rows': 2, 'placeholder': 'Role description'}),
