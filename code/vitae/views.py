@@ -51,11 +51,20 @@ def registerAction(request):
     newUser.save()
     print("New user created:", newUser)
 
-    # Also create a new empty profile associated with this user and initialize its empty sections.
-    newProfile = Profile(owner=newUser)
+    # Create new empty profile associated with user
+    newProfile = Profile(
+        owner=newUser,
+        bio=registerForm.cleaned_data['bio'],
+        phone=registerForm.cleaned_data['phone'],
+        location=registerForm.cleaned_data['location'],
+        twitter=registerForm.cleaned_data['twitter'],
+        linkedin=registerForm.cleaned_data['linkedin'],
+        facebook=registerForm.cleaned_data['facebook'],
+        github=registerForm.cleaned_data['github'],
+        title1=registerForm.cleaned_data['title1'],
+        title2=registerForm.cleaned_data['title2'],
+        title3=registerForm.cleaned_data['title3'])
     newProfile.save()
-    initSections(newProfile)
-
     print("New profile created for new user:", newProfile)
 
     # After registering users, automatically log them in.
@@ -172,10 +181,10 @@ def getProfileContext(profileOwner):
         'addEducationForm': EducationForm(),
         'addProjectForm': ProjectsForm(),
         'addSkillForm': SkillsForm(),
-        'workElements': profileOwner.profile.workSection.elements.all(), # TODO: Sort in chronological order
-        'educationElements': profileOwner.profile.educationSection.elements.all(),
-        'projectElements': profileOwner.profile.projectSection.elements.all(),
-        'skillElements': profileOwner.profile.skillSection.elements.all(),
+        'workElements': profileOwner.profile.workElements.all(), # TODO: Sort in chronological order
+        'educationElements': profileOwner.profile.educationElements.all(),
+        'projectElements': profileOwner.profile.projectElements.all(),
+        'skillElements': profileOwner.profile.skillElements.all(),
     }
     return context
 

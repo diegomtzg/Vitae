@@ -67,19 +67,19 @@
                     <h1 class="mb-0">
                         {{ profileOwner.first_name }}
                         <span class="gradient-text">{{ profileOwner.last_name }}</span>
+                        <i class="title-icon fas fa-edit"></i>
                     </h1>
-                    <i class="title-icon fas fa-edit"></i>
                     <div class="subheading mb-5">
-                        <!-- TODO: When should we get this info -->
-                        5000 Forbes Ave · Pittsburgh, PA 15213 · (888) 888-8888 ·
+                        {{ profileOwner.profile.location }} • {{ profileOwner.profile.phone }} •
                         <a class="gradient-text" href="mailto:name@email.com">{{ profileOwner.email }}</a>
                     </div>
-                    <p class="lead mb-5">User's short bio goes here</p>
+                    <p class="lead mb-5">{{ profileOwner.profile.bio }}</p>
                     <div class="social-icons">
-                        <a class="social-icon" href="#"><i class="fab fa-linkedin-in"></i></a>
-                        <a class="social-icon" href="#"><i class="fab fa-github"></i></a>
-                        <a class="social-icon" href="#"><i class="fab fa-twitter"></i></a>
-                        <a class="social-icon" href="#"><i class="fab fa-facebook-f"></i></a>
+                        <!-- TODO: Don't add if link not available -->
+                        <a class="social-icon" href="{{ profileOwner.profile.linkedin }}"><i class="fab fa-linkedin-in"></i></a>
+                        <a class="social-icon" href="{{ profileOwner.profile.github }}"><i class="fab fa-github"></i></a>
+                        <a class="social-icon" href="{{ profileOwner.profile.twitter }}"><i class="fab fa-twitter"></i></a>
+                        <a class="social-icon" href="{{ profileOwner.profile.facebook }}"><i class="fab fa-facebook-f"></i></a>
                     </div>
                     <!-- Add Section Dropdown -->
                     {% if user.get_username == profileOwner.username %}
@@ -106,7 +106,7 @@
                         <div class="modal-dialog modal-dialog-centered" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h5 class="modal-title" id="addSectionPopupLabel">
+                                    <h5 class="modal-title gradient-text" id="addSectionPopupLabel">
                                         Add work experience
                                     </h5>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -123,7 +123,7 @@
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                        <button type="submit" class="btn btn-primary">Add work experience</button>
+                                        <button type="submit" class="btn btn-primary gradient-bg">Add work experience</button>
                                     </div>
                                 </form>
                             </div>
@@ -133,7 +133,7 @@
                         <div class="modal-dialog modal-dialog-centered" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h5 class="modal-title" id="addSectionPopupLabel">
+                                    <h5 class="modal-title gradient-text" id="addSectionPopupLabel">
                                         Add education
                                     </h5>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -150,7 +150,7 @@
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                        <button type="submit" class="btn btn-primary">Add education</button>
+                                        <button type="submit" class="btn btn-primary gradient-bg">Add education</button>
                                     </div>
                                 </form>
                             </div>
@@ -160,7 +160,7 @@
                         <div class="modal-dialog modal-dialog-centered" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h5 class="modal-title" id="addSectionPopupLabel">
+                                    <h5 class="modal-title gradient-text" id="addSectionPopupLabel">
                                         Add project
                                     </h5>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -177,7 +177,7 @@
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                        <button type="submit" class="btn btn-primary">Add project</button>
+                                        <button type="submit" class="btn btn-primary gradient-bg">Add project</button>
                                     </div>
                                 </form>
                             </div>
@@ -187,7 +187,7 @@
                         <div class="modal-dialog modal-dialog-centered" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h5 class="modal-title" id="addSectionPopupLabel">
+                                    <h5 class="modal-title gradient-text" id="addSectionPopupLabel">
                                         Add skill
                                     </h5>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -204,7 +204,7 @@
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                        <button type="submit" class="btn btn-primary">Add skill</button>
+                                        <button type="submit" class="btn btn-primary gradient-bg">Add skill</button>
                                     </div>
                                 </form>
                             </div>
@@ -223,11 +223,13 @@
                         {% for element in workElements %}
                             <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
                                 <div class="flex-grow-1">
-                                    <h3 class="mb-0">{{ element.company_name }}</h3>
+                                    <h3 class="mb-0 gradient-text">{{ element.company_name }}
+                                        <i class="title-icon fas fa-edit"></i>
+                                    </h3>
                                     <div class="subheading mb-3">{{ element.job_title }}</div>
                                     <p>{{ element.description }}</p>
                                 </div>
-                                <div class="flex-shrink-0"><span class="text-primary">{{ element.start_date }} - {{ element.end_date }}</span></div>
+                                <div class="flex-shrink-0"><span class="gradient-text">{{ element.start_date }} - {{ element.end_date }}</span></div>
                             </div>
                         {% endfor %}
                     </div>
@@ -242,12 +244,14 @@
                         {% for element in educationElements %}
                             <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
                                 <div class="flex-grow-1">
-                                    <h3 class="mb-0">{{ element.school_name }}</h3>
-                                    <div class="subheading mb-3 gradient-text">{{ element.school_location }}</div>
+                                    <h3 class="mb-0 gradient-text">{{ element.school_name }}
+                                        <i class="title-icon fas fa-edit"></i>
+                                    </h3>
+                                    <div class="subheading mb-3">{{ element.school_location }}</div>
                                     <div>{{ element.degree }}</div>
                                     <p>GPA: {{ element.gpa }}</p>
                                 </div>
-                                <div class="flex-shrink-0"><span class="gradient-text">Graduating {{ element.graduation_date }}</span></div>
+                                <div class="flex-shrink-0"><span class="gradient-text">Graduation: {{ element.graduation_date }}</span></div>
                             </div>
                         {% endfor %}
                     </div>
@@ -262,10 +266,12 @@
                         {% for element in projectElements %}
                             <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
                                 <div class="flex-grow-1">
-                                    <h3 class="mb-0">{{ element.name }}</h3>
+                                    <h3 class="mb-0 gradient-text">{{ element.name }}
+                                        <i class="title-icon fas fa-edit"></i>
+                                    </h3>
                                     <p>{{ element.description }}</p>
                                 </div>
-                                <div class="flex-shrink-0"><span class="text-primary">{{ element.start_date }} – {{ element.end_date }}</span></div>
+                                <div class="flex-shrink-0"><span class="gradient-text">{{ element.start_date }} – {{ element.end_date }}</span></div>
                             </div>
                         {% endfor %}
                     </div>
@@ -280,34 +286,14 @@
                         {% for element in skillElements %}
                             <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
                                 <div class="flex-grow-1">
-                                    <h3 class="mb-0">{{ element.name }}</h3>
-                                    <div class="subheading mb-3">Proficiency: {{ element.proficiency }}/10</div>
+                                    <h3 class="mb-0 gradient-text">{{ element.name }}
+                                        <i class="title-icon fas fa-edit"></i>
+                                    </h3>
+                                    <div class="subheading mb-3">Proficiency: {{ element.proficiency }}/10.0</div>
                                     <p>{{ element.description }}</p>
                                 </div>
-                                <div class="flex-shrink-0"><span class="text-primary">ICON</span></div>
                             </div>
-                            <ul class="fa-ul mb-0">
-                                <li>
-                                    <span class="fa-li"><i class="fas fa-check"></i></span>
-                                    {{ element.name }} - {{ element.proficiency }}/10
-                                </li>
-                            </ul>
                         {% endfor %}
-                        <!-- TODO: Add FontAwesome icon-picker to skills section -->
-                        <ul class="list-inline dev-icons">
-                            <li class="list-inline-item"><i class="fab fa-html5"></i></li>
-                            <li class="list-inline-item"><i class="fab fa-css3-alt"></i></li>
-                            <li class="list-inline-item"><i class="fab fa-js-square"></i></li>
-                            <li class="list-inline-item"><i class="fab fa-angular"></i></li>
-                            <li class="list-inline-item"><i class="fab fa-react"></i></li>
-                            <li class="list-inline-item"><i class="fab fa-node-js"></i></li>
-                            <li class="list-inline-item"><i class="fab fa-sass"></i></li>
-                            <li class="list-inline-item"><i class="fab fa-less"></i></li>
-                            <li class="list-inline-item"><i class="fab fa-wordpress"></i></li>
-                            <li class="list-inline-item"><i class="fab fa-gulp"></i></li>
-                            <li class="list-inline-item"><i class="fab fa-grunt"></i></li>
-                            <li class="list-inline-item"><i class="fab fa-npm"></i></li>
-                        </ul>
                     </div>
                 </section>
             {% endif %}
