@@ -81,12 +81,35 @@ def profileSearch(query):
     @return: List of string usernames of profiles matching search query.
     """
     print("~~~ ENTERED PROFILE SEARCH ~~~")
+    temporaryQuery = "chan zuck, educate, abnormal security, 4.0, distributed systems,"
 
     allProfiles = Profile.objects.all()
     for profile in allProfiles:
-        serialized = serializeProfileAsString(profile)
+        serialized = searchForKeywordsInProfile(profile, temporaryQuery)
         print(f"Profile: {profile.owner}\n{serialized}\n")
 
+def searchForKeywordsInProfile(profile, keyphrases):
+    # Build the profile query keys
+    queryKeys = set()
+    for keyphrase in keyphrases.split(","):
+        keyphrase = keyphrase.strip()
+        wordsInPhrase = keyphrase.split(" ")
+        if len(wordsInPhrase) == 0 or len(keyphrase) == 0:
+            continue
+        elif len(wordsInPhrase) > 1:
+            # In order to search for existence of each word of the phrase in the profile
+            for word in wordsInPhrase:
+                queryKeys.add(word)
+        queryKeys.add(keyphrase)
+
+    serializedProfile = serializeProfileAsString(profile)
+    keywordsFound = dict()
+    for key in queryKeys:
+        foundCount = serializedProfile.count(key)
+        if foundCount > 0:
+            keywordsFound[key] = foundCount
+
+    return keywordsFound
 
 def serializeProfileAsString(profile):
     serialized = ""
