@@ -80,15 +80,26 @@ def profileSearch(query):
     @param query:
     @return: List of string usernames of profiles matching search query.
     """
-    print("Entered Profile Search.")
+    print("~~~ ENTERED PROFILE SEARCH ~~~")
 
-    allProfiles = User.objects.all()
-    print(allProfiles[0])
-    pass
+    allProfiles = Profile.objects.all()
+    for profile in allProfiles:
+        serialized = serializeProfileAsString(profile)
+        print(f"Profile: {profile.owner}\n{serialized}\n")
 
-def serializeProfile(profile):
-    pass
 
+def serializeProfileAsString(profile):
+    serialized = ""
+    for workElem in profile.workSection.elements.all():
+        serialized = serialized + workElem.__str__().lower() + "\n"
+    for educationElem in profile.educationSection.elements.all():
+        serialized = serialized + educationElem.__str__().lower() + "\n"
+    for projectElem in profile.projectSection.elements.all():
+        serialized = serialized + projectElem.__str__().lower() + "\n"
+    for skillElem in profile.skillSection.elements.all():
+        serialized = serialized + skillElem.__str__().lower() + "\n"
+
+    return serialized
 
 @login_required
 def visitProfileAction(request, username):
