@@ -58,7 +58,7 @@ class LoginForm(forms.Form):
 class WorkExperienceForm(forms.ModelForm):
     class Meta:
         model = WorkExperienceElement
-        exclude = ('section',)
+        exclude = ('profile',)
         widgets = {
             'company_name': forms.TextInput(attrs={'class': 'form-control','placeholder': 'Company name'}),
             'job_title': forms.TextInput(attrs={'class': 'form-control','placeholder': 'Job title'}),
@@ -71,7 +71,7 @@ class WorkExperienceForm(forms.ModelForm):
 class EducationForm(forms.ModelForm):
     class Meta:
         model = EducationElement
-        exclude = ('section',)
+        exclude = ('profile',)
         widgets = {
            'school_name': forms.TextInput(attrs={'class': 'form-control','placeholder': 'School name'}),
            'school_location': forms.TextInput(attrs={'class': 'form-control','placeholder': 'School location'}),
@@ -86,7 +86,7 @@ class EducationForm(forms.ModelForm):
 class ProjectsForm(forms.ModelForm):
     class Meta:
         model = ProjectElement
-        exclude = ('section',)
+        exclude = ('profile',)
         widgets = {
             'name': forms.TextInput(attrs={'class': 'form-control','placeholder': 'Project name'}),
             'description': forms.TextInput(attrs={'class': 'form-control','placeholder': 'Project description'}),
@@ -98,7 +98,7 @@ class ProjectsForm(forms.ModelForm):
 class SkillsForm(forms.ModelForm):
     class Meta:
         model = SkillElement
-        exclude = ('section',)
+        exclude = ('profile',)
         widgets = {
             'name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Skill name'}),
             'proficiency': forms.NumberInput(attrs={'class': 'form-control', 'min': 1, 'max': 10, 'placeholder': 'Proficiency'})

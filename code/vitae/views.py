@@ -106,7 +106,7 @@ def editProfile(request, sectionName):
             return redirect(reverse('profile', args=[request.user]))
 
         new_element = WorkExperienceElement(
-            section=profile.workSection,
+            profile=profile,
             company_name=form.cleaned_data['company_name'],
             job_title=form.cleaned_data['job_title'],
             start_date=form.cleaned_data['start_date'],
@@ -123,7 +123,7 @@ def editProfile(request, sectionName):
             return redirect(reverse('profile', args=[request.user]))
 
         new_element = EducationElement(
-            section=profile.educationSection,
+            profile=profile,
             school_name=form.cleaned_data['school_name'],
             school_location=form.cleaned_data['school_location'],
             degree=form.cleaned_data['degree'],
@@ -140,7 +140,7 @@ def editProfile(request, sectionName):
             return redirect(reverse('profile', args=[request.user]))
 
         new_element = ProjectElement(
-            section=profile.projectSection,
+            profile=profile,
             name=form.cleaned_data['name'],
             description=form.cleaned_data['description'],
             start_date=form.cleaned_data['start_date'],
@@ -156,13 +156,12 @@ def editProfile(request, sectionName):
             return redirect(reverse('profile', args=[request.user]))
 
         new_element = SkillElement(
-            section=profile.skillSection,
+            profile=profile,
             name=form.cleaned_data['name'],
             proficiency=form.cleaned_data['proficiency'],)
         new_element.save()
         print("New skill profile element")
 
-    # TODO: Render a confirmation popup or ideally add an animation of new element showing up on page instead of redirecting... (maybe AJAX?)
     return redirect(reverse('profile', args=[request.user]))
 
 
