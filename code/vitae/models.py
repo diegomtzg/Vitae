@@ -21,6 +21,7 @@ class Profile(models.Model):
 class WorkExperienceElement(models.Model):
     profile = models.ForeignKey(Profile, related_name='workElements', on_delete=models.CASCADE)
     company_name = models.CharField(max_length=MAX_LENGTH)
+    # location = models.CharField(max_length=MAX_LENGTH) # TODO
     job_title = models.CharField(max_length=MAX_LENGTH)
     start_date = models.CharField(max_length=MAX_LENGTH)
     end_date = models.CharField(max_length=MAX_LENGTH)
@@ -37,7 +38,7 @@ class EducationElement(models.Model):
 class ProjectElement(models.Model):
     profile = models.ForeignKey(Profile, related_name='projectElements', on_delete=models.CASCADE)
     name = models.CharField(max_length=MAX_LENGTH)
-    description = models.CharField(max_length=MAX_LENGTH)
+    description = models.TextField()
     start_date = models.CharField(max_length=MAX_LENGTH)
     end_date = models.CharField(max_length=MAX_LENGTH)
 
