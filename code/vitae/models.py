@@ -43,13 +43,21 @@ class WorkExperienceElement(models.Model):
     end_date = models.CharField(max_length=MAX_LENGTH)
     description = models.TextField()
 
+    def __str__(self):
+        return "%s, %s, %s" % (self.company_name, self.job_title, self.description)
+
 class EducationElement(models.Model):
     section = models.ForeignKey(EducationSection, related_name="elements", on_delete=models.CASCADE)
     school_name = models.CharField(max_length=MAX_LENGTH)
     school_location = models.CharField(max_length=MAX_LENGTH)
     degree = models.CharField(max_length=MAX_LENGTH)
+    # TODO: Add Major section
+    # TODO: Allow users to provide additional information e.g. second majors, minors, honors, deans list
     gpa = models.CharField(max_length=MAX_LENGTH)
     graduation_date = models.CharField(max_length=MAX_LENGTH)
+
+    def __str__(self):
+        return "%s, %s, %s, %s" % (self.school_name, self.school_location, self.degree, self.graduation_date)
 
 class ProjectElement(models.Model):
     section = models.ForeignKey(ProjectSection, related_name="elements", on_delete=models.CASCADE)
@@ -58,11 +66,18 @@ class ProjectElement(models.Model):
     start_date = models.CharField(max_length=MAX_LENGTH)
     end_date = models.CharField(max_length=MAX_LENGTH)
     # TODO: Add photos/videos
+    # TODO: Add hyperlinks to additional resources (e.g. videos, github repos)
+
+    def __str__(self):
+        return "%s, %s" % (self.name, self.description)
 
 class SkillElement(models.Model):
     section = models.ForeignKey(SkillSection, related_name="elements", on_delete=models.CASCADE)
     name = models.CharField(max_length=MAX_LENGTH)
     proficiency = models.FloatField()
+
+    def __str__(self):
+        return "%s" % (self.name)
 """ END OF SECTION ELEMENTS """
 
 
