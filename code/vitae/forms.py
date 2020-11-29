@@ -8,19 +8,19 @@ class RegisterForm(forms.Form):
     first_name = forms.CharField(widget=forms.TextInput(attrs={'class':'input--style-5'}))
     last_name = forms.CharField(widget=forms.TextInput(attrs={'class':'input--style-5'}))
     email = forms.EmailField(widget=forms.EmailInput(attrs={'class':'input--style-5'}))
-    phone = forms.CharField(widget=forms.TextInput(attrs={'class': 'input--style-5'}))
+    phone = forms.CharField(required=False, widget=forms.TextInput(attrs={'class': 'input--style-5'}))
     username = forms.CharField(widget=forms.TextInput(attrs={'class':'input--style-5'}))
     password = forms.CharField(widget=forms.PasswordInput(attrs={'class':'input--style-5'}))
     confirm_password = forms.CharField(widget=forms.PasswordInput(attrs={'class':'input--style-5'}))
-    location = forms.CharField(widget=forms.TextInput(attrs={'class': 'input--style-5'}))
-    twitter = forms.URLField(widget=forms.TextInput(attrs={'class': 'input--style-5'}))
-    github = forms.URLField(widget=forms.TextInput(attrs={'class': 'input--style-5'}))
-    linkedin = forms.URLField(widget=forms.TextInput(attrs={'class': 'input--style-5'}))
-    facebook = forms.URLField(widget=forms.TextInput(attrs={'class': 'input--style-5'}))
-    bio = forms.CharField(widget=forms.TextInput(attrs={'class': 'input--style-5'}))
-    title1 = forms.CharField(widget=forms.TextInput(attrs={'class': 'input--style-5'}))
-    title2 = forms.CharField(widget=forms.TextInput(attrs={'class': 'input--style-5'}))
-    title3 = forms.CharField(widget=forms.TextInput(attrs={'class': 'input--style-5'}))
+    location = forms.CharField(required=False, widget=forms.TextInput(attrs={'class': 'input--style-5'}))
+    twitter = forms.URLField(required=False, widget=forms.TextInput(attrs={'class': 'input--style-5'}))
+    github = forms.URLField(required=False, widget=forms.TextInput(attrs={'class': 'input--style-5'}))
+    linkedin = forms.URLField(required=False, widget=forms.TextInput(attrs={'class': 'input--style-5'}))
+    facebook = forms.URLField(required=False, widget=forms.TextInput(attrs={'class': 'input--style-5'}))
+    bio = forms.CharField(required=False, widget=forms.TextInput(attrs={'class': 'input--style-5'}))
+    title1 = forms.CharField(required=False, widget=forms.TextInput(attrs={'class': 'input--style-5'}))
+    title2 = forms.CharField(required=False, widget=forms.TextInput(attrs={'class': 'input--style-5'}))
+    title3 = forms.CharField(required=False, widget=forms.TextInput(attrs={'class': 'input--style-5'}))
 
     def clean(self):
         clean_data = super().clean()
@@ -53,6 +53,22 @@ class LoginForm(forms.Form):
             raise forms.ValidationError('Invalid username or password.')
 
         return clean_data
+
+
+class AboutForm(forms.Form):
+    first_name = forms.CharField(widget=forms.TextInput(attrs={'class':'input--style-5'}))
+    last_name = forms.CharField(widget=forms.TextInput(attrs={'class':'input--style-5'}))
+    email = forms.EmailField(widget=forms.EmailInput(attrs={'class':'input--style-5'}))
+    phone = forms.CharField(required=False, widget=forms.TextInput(attrs={'class': 'input--style-5'}))
+    location = forms.CharField(required=False, widget=forms.TextInput(attrs={'class': 'input--style-5'}))
+    twitter = forms.URLField(required=False, widget=forms.TextInput(attrs={'class': 'input--style-5'}))
+    github = forms.URLField(required=False, widget=forms.TextInput(attrs={'class': 'input--style-5'}))
+    linkedin = forms.URLField(required=False, widget=forms.TextInput(attrs={'class': 'input--style-5'}))
+    facebook = forms.URLField(required=False, widget=forms.TextInput(attrs={'class': 'input--style-5'}))
+    bio = forms.CharField(required=False, widget=forms.TextInput(attrs={'class': 'input--style-5'}))
+    title1 = forms.CharField(required=False, widget=forms.TextInput(attrs={'class': 'input--style-5'}))
+    title2 = forms.CharField(required=False, widget=forms.TextInput(attrs={'class': 'input--style-5'}))
+    title3 = forms.CharField(required=False, widget=forms.TextInput(attrs={'class': 'input--style-5'}))
 
 
 class WorkExperienceForm(forms.ModelForm):
@@ -104,5 +120,3 @@ class SkillsForm(forms.ModelForm):
             'name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Skill name'}),
             'proficiency': forms.NumberInput(attrs={'class': 'form-control', 'min': 1, 'max': 10, 'placeholder': 'Proficiency'})
         }
-
-# TODO: Add forms for missing sections

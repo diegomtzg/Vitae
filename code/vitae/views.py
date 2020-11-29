@@ -91,12 +91,7 @@ def visitProfileAction(request, username):
 
 
 @login_required
-def editProfile(request, sectionName):
-    """
-    General class to handle any and all modifications to a user's profile.
-    @param TODO elementId identifier for the section element being modified or "new" if adding a new element. (Currently only adds new elements)
-    """
-
+def addProfileSection(request, sectionName):
     profile = request.user.profile
     if sectionName == 'work':
         form = WorkExperienceForm(request.POST)
@@ -163,6 +158,97 @@ def editProfile(request, sectionName):
         print("New skill profile element")
 
     return redirect(reverse('profile', args=[request.user]))
+
+
+@login_required
+def editProfileElement(request, sectionName, elementId):
+    # If elementId is not an integer, don't try anything or it will break
+    try:
+        id = int(elementId)
+    except:
+        user = request.user
+        context = getProfileContext(user)
+        return render(request, 'vitae/profile.html', context)
+
+    if sectionName == 'work':
+        element = request.user.profile.workElements.get(id=id)
+        if request.method == 'GET':
+            form = WorkExperienceForm(instance=element)
+            return render(request, 'vitae/edit_form.html', {'form': form, 'section': 'work', 'id': id})
+        else:
+            form = WorkExperienceForm(request.POST, instance=element)
+            if form.is_valid():
+                form.save()
+            return redirect(reverse('profile', args=[request.user]))
+    elif sectionName == 'education':
+        element = request.user.profile.educationElements.get(id=id)
+        if request.method == 'GET':
+            form = EducationForm(instance=element)
+            return render(request, 'vitae/edit_form.html', {'form': form, 'section': 'education', 'id': id})
+        else:
+            form = EducationForm(request.POST, instance=element)
+            if form.is_valid():
+                form.save()
+            return redirect(reverse('profile', args=[request.user]))
+    elif sectionName == 'project':
+        element = request.user.profile.projectElements.get(id=id)
+        if request.method == 'GET':
+            form = ProjectsForm(instance=element)
+            return render(request, 'vitae/edit_form.html', {'form': form, 'section': 'project', 'id': id})
+        else:
+            form = ProjectsForm(request.POST, instance=element)
+            if form.is_valid():
+                form.save()
+            return redirect(reverse('profile', args=[request.user]))
+    elif sectionName == 'skill':
+        element = request.user.profile.skillElements.get(id=id)
+        if request.method == 'GET':
+            form = SkillsForm(instance=element)
+            return render(request, 'vitae/edit_form.html', {'form': form, 'section': 'skill', 'id': id})
+        else:
+            form = SkillsForm(request.POST, instance=element)
+            if form.is_valid():
+                form.save()
+            return redirect(reverse('profile', args=[request.user]))
+    if sectionName == 'about':
+        if request.method == 'GET':
+            form = AboutForm(data={
+                'first_name': request.user.first_name,
+                'last_name': request.user.last_name,
+                'email': request.user.email,
+                'phone': request.user.profile.phone,
+                'location': request.user.profile.location,
+                'twitter': request.user.profile.twitter,
+                'github': request.user.profile.github,
+                'facebook': request.user.profile.facebook,
+                'linkedin': request.user.profile.linkedin,
+                'bio': request.user.profile.bio,
+                'title1': request.user.profile.title1,
+                'title2': request.user.profile.title2,
+                'title3': request.user.profile.title3,
+            })
+            return render(request, 'vitae/edit_form.html', {'form': form, 'section': 'about', 'id': id})
+        else:
+            form = AboutForm(request.POST)
+            if form.is_valid():
+                user = request.user
+                user.first_name = form.cleaned_data['first_name']
+                user.last_name = form.cleaned_data['last_name']
+                user.email = form.cleaned_data['email']
+                user.save()
+                profile = request.user.profile
+                profile.phone = form.cleaned_data['phone']
+                profile.location = form.cleaned_data['location']
+                profile.twitter = form.cleaned_data['twitter']
+                profile.github = form.cleaned_data['github']
+                profile.facebook = form.cleaned_data['facebook']
+                profile.linkedin = form.cleaned_data['linkedin']
+                profile.bio = form.cleaned_data['bio']
+                profile.title1 = form.cleaned_data['title1']
+                profile.title2 = form.cleaned_data['title2']
+                profile.title3 = form.cleaned_data['title3']
+                profile.save()
+            return redirect(reverse('profile', args=[request.user]))
 
 
 @login_required

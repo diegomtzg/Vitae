@@ -196,5 +196,19 @@ a.gradient-text:hover {
 }
 
 .title-icon {
-  font-size: 60%;
+  color: #495057;
+  font-size: 80%;
+}
+
+.title-icon-small {
+  color: #495057;
+  font-size: 40%;
+}
+
+.title-icon:hover {
+  color: #bd5d38;
+}
+
+.title-icon-small:hover {
+  color: #bd5d38;
 }
