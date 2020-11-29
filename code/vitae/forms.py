@@ -21,6 +21,7 @@ class RegisterForm(forms.Form):
     title1 = forms.CharField(required=False, widget=forms.TextInput(attrs={'class': 'input--style-5'}))
     title2 = forms.CharField(required=False, widget=forms.TextInput(attrs={'class': 'input--style-5'}))
     title3 = forms.CharField(required=False, widget=forms.TextInput(attrs={'class': 'input--style-5'}))
+    profile_picture = forms.FileField(required=False)
 
     def clean(self):
         clean_data = super().clean()
@@ -56,6 +57,7 @@ class LoginForm(forms.Form):
 
 
 class AboutForm(forms.Form):
+    profile_picture = forms.FileField(required=False)
     first_name = forms.CharField(widget=forms.TextInput(attrs={'class':'input--style-5'}))
     last_name = forms.CharField(widget=forms.TextInput(attrs={'class':'input--style-5'}))
     email = forms.EmailField(widget=forms.EmailInput(attrs={'class':'input--style-5'}))
@@ -69,7 +71,6 @@ class AboutForm(forms.Form):
     title1 = forms.CharField(required=False, widget=forms.TextInput(attrs={'class': 'input--style-5'}))
     title2 = forms.CharField(required=False, widget=forms.TextInput(attrs={'class': 'input--style-5'}))
     title3 = forms.CharField(required=False, widget=forms.TextInput(attrs={'class': 'input--style-5'}))
-    profile_picture = forms.FileField(required=False)
 
 
 class WorkExperienceForm(forms.ModelForm):

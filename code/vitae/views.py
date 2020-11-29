@@ -38,7 +38,7 @@ def registerAction(request):
         return render(request, 'vitae/register.html', {'form': RegisterForm()})
 
     # Received register form. Validate and create new user.
-    registerForm = RegisterForm(request.POST)
+    registerForm = RegisterForm(request.POST, request.FILES)
     if not registerForm.is_valid():
         return render(request, 'vitae/register.html', {'form': registerForm})
 
@@ -65,6 +65,12 @@ def registerAction(request):
         title1=registerForm.cleaned_data['title1'],
         title2=registerForm.cleaned_data['title2'],
         title3=registerForm.cleaned_data['title3'])
+
+    if len(request.FILES) > 0:
+        pic = registerForm.cleaned_data['profile_picture']
+        print('Uploaded picture: {} (type={})'.format(pic, type(pic)))
+        newProfile.profile_pic = pic
+        newProfile.profile_pic_ctype = type(pic)
     newProfile.save()
     print("New profile created for new user:", newProfile)
 
