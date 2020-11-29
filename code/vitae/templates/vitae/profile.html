@@ -30,7 +30,12 @@
         <a class="navbar-brand js-scroll-trigger" href="#page-top">
             <span class="d-block d-lg-none">{{ profileOwner.first_name }} {{ profileOwner.last_name }}</span>
             <span class="d-none d-lg-block">
-                    <img class="img-fluid img-profile rounded-circle mx-auto mb-2" src="{% static 'vitae/assets/img/defaultProfilePic.jpg' %}" alt="" />
+                    {% if profileOwner.profile.profile_pic %}
+                        <img class="img-fluid img-profile rounded-circle mx-auto mb-2" src="{% url 'photo' profileOwner.username %}" alt="" />
+                    {% else %}
+                        <img class="img-fluid img-profile rounded-circle mx-auto mb-2" src="{% static 'vitae/assets/img/defaultProfilePic.jpg' %}" alt="" />
+                    {% endif %}
+
                 </span>
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse"
@@ -68,7 +73,7 @@
                         {{ profileOwner.first_name }}
                         <span class="gradient-text">{{ profileOwner.last_name }}</span>
                         <a href="{% url 'editProfile' 'about' '0' %}">
-                            <i class="title-icon fas fa-edit"></i>
+                            <i class="title-icon-small fas fa-edit"></i>
                         </a>
                     </h1>
                     <div class="subheading mb-5">
@@ -234,6 +239,9 @@
                                         <a href="{% url 'editProfile' 'work' element.id %}">
                                             <i class="title-icon fas fa-edit"></i>
                                         </a>
+                                        <a href="{% url 'removeElement' 'work' element.id %}">
+                                            <i class="title-icon fas fa-trash"></i>
+                                        </a>
                                         </h3>
                                     </h3>
                                     <div class="subheading mb-3">{{ element.job_title }}</div>
@@ -257,6 +265,9 @@
                                     <h3 class="mb-0 gradient-text">{{ element.school_name }}
                                         <a href="{% url 'editProfile' 'education' element.id %}">
                                             <i class="title-icon fas fa-edit"></i>
+                                        </a>
+                                        <a href="{% url 'removeElement' 'education' element.id %}">
+                                            <i class="title-icon fas fa-trash"></i>
                                         </a>
                                     </h3>
                                     <div class="subheading mb-3">{{ element.school_location }}</div>
@@ -282,6 +293,9 @@
                                         <a href="{% url 'editProfile' 'project' element.id %}">
                                             <i class="title-icon fas fa-edit"></i>
                                         </a>
+                                        <a href="{% url 'removeElement' 'project' element.id %}">
+                                            <i class="title-icon fas fa-trash"></i>
+                                        </a>
                                     </h3>
                                     <p>{{ element.description }}</p>
                                 </div>
@@ -303,6 +317,9 @@
                                     <h3 class="mb-0 gradient-text">{{ element.name }}
                                         <a href="{% url 'editProfile' 'skill' element.id %}">
                                             <i class="title-icon fas fa-edit"></i>
+                                        </a>
+                                        <a href="{% url 'removeElement' 'skill' element.id %}">
+                                            <i class="title-icon fas fa-trash"></i>
                                         </a>
                                     </h3>
                                     <div class="subheading mb-3">Proficiency: {{ element.proficiency }}/10.0</div>

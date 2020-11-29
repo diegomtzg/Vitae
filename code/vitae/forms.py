@@ -69,6 +69,7 @@ class AboutForm(forms.Form):
     title1 = forms.CharField(required=False, widget=forms.TextInput(attrs={'class': 'input--style-5'}))
     title2 = forms.CharField(required=False, widget=forms.TextInput(attrs={'class': 'input--style-5'}))
     title3 = forms.CharField(required=False, widget=forms.TextInput(attrs={'class': 'input--style-5'}))
+    profile_picture = forms.FileField(required=False)
 
 
 class WorkExperienceForm(forms.ModelForm):

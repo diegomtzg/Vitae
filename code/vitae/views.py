@@ -3,6 +3,7 @@ from django.shortcuts import render, redirect, reverse, get_object_or_404
 from django.http import HttpResponse
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from django.core.files import File
 
 from django.contrib.auth.models import User
 from vitae.models import *
@@ -229,7 +230,7 @@ def editProfileElement(request, sectionName, elementId):
             })
             return render(request, 'vitae/edit_form.html', {'form': form, 'section': 'about', 'id': id})
         else:
-            form = AboutForm(request.POST)
+            form = AboutForm(request.POST, request.FILES)
             if form.is_valid():
                 user = request.user
                 user.first_name = form.cleaned_data['first_name']
@@ -247,8 +248,45 @@ def editProfileElement(request, sectionName, elementId):
                 profile.title1 = form.cleaned_data['title1']
                 profile.title2 = form.cleaned_data['title2']
                 profile.title3 = form.cleaned_data['title3']
+
+                if len(request.FILES) > 0:
+                    pic = form.cleaned_data['profile_picture']
+                    print('Uploaded picture: {} (type={})'.format(pic, type(pic)))
+                    profile.profile_pic = pic
+                    profile.profile_pic_ctype = type(pic)
+
                 profile.save()
+
             return redirect(reverse('profile', args=[request.user]))
+
+
+
+@login_required
+def removeProfileElement(request, sectionName, elementId):
+    # If elementId is not an integer, don't try anything or it will break
+    try:
+        id = int(elementId)
+    except:
+        user = request.user
+        context = getProfileContext(user)
+        return render(request, 'vitae/profile.html', context)
+
+    if sectionName == 'work':
+            element = request.user.profile.workElements.get(id=id)
+            element.delete()
+            return redirect(reverse('profile', args=[request.user]))
+    if sectionName == 'education':
+        element = request.user.profile.educationElements.get(id=id)
+        element.delete()
+        return redirect(reverse('profile', args=[request.user]))
+    if sectionName == 'projects':
+        element = request.user.profile.projectElements.get(id=id)
+        element.delete()
+        return redirect(reverse('profile', args=[request.user]))
+    if sectionName == 'skill':
+        element = request.user.profile.skillElements.get(id=id)
+        element.delete()
+        return redirect(reverse('profile', args=[request.user]))
 
 
 @login_required

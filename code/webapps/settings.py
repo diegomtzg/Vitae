@@ -125,4 +125,5 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
-ASSETS_ROOT = os.path.join(BASE_DIR, 'vitae/static/assets/')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'profile_pictures/')
+ASSETS_ROOT = os.path.join(BASE_DIR, 'vitae/static/vitae/assets/')
