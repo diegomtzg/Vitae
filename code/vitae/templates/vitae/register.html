@@ -17,7 +17,7 @@
                     <h2 class="title">Vitae - Register</h2>
                 </div>
                 <div class="card-body">
-                    <form method="POST" action="{% url 'register' %}">
+                    <form enctype="multipart/form-data" method="POST" action="{% url 'register' %}">
                         <div class="form-row">
                             {{ form.non_field_errors }}
                         </div>
@@ -156,6 +156,14 @@
                                             <label class="label--desc">Title 3</label>
                                         </div>
                                     </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="name">Profile picture</div>
+                            <div class="value">
+                                <div class="input-group">
+                                    {{ form.profile_picture }}
                                 </div>
                             </div>
                         </div>
