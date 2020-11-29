@@ -87,9 +87,72 @@ def registerAction(request):
 
 def searchAction(request):
     if request.method == 'GET':
-        return render(request, 'vitae/search.html')
+        return render(request, 'vitae/search.html', context={'form': SearchForm()})
 
+    searchForm = SearchForm(request.POST)
+    if not searchForm.is_valid():
+        return render(request, 'vitae/search.html', context={'form': searchForm})
 
+    print(f"~~~~~ THIS IS THE REQUEST: {request.POST} ~~~~")
+    return render(request, 'vitae/searchResults.html', context={'results': profileSearch(searchForm.cleaned_data['query'])})
+
+def profileSearch(query):
+    """
+    Conducts a search through all profiles for keywords in query and
+    returns list of all usernames matching some portion of the query.
+    @param query:
+    @return: List of string usernames of profiles matching search query.
+    """
+    print(f"~~~ ENTERED PROFILE SEARCH: {query} ~~~")
+    temporaryQuery = "chan zuck, educate, abnormal security, 4.0, distributed systems,"
+
+    validProfiles = []
+    for profile in Profile.objects.all():
+        queryResults = searchForKeywordsInProfile(profile, query)
+        print(f"Profile: {profile.owner}\n{queryResults}\n")
+        if len(queryResults.keys()) > 0:
+            validProfiles.append(profile.owner)
+
+    print(validProfiles)
+    return validProfiles
+
+def searchForKeywordsInProfile(profile, keyphrases):
+    # Build the profile query keys
+    queryKeys = set()
+    for keyphrase in keyphrases.split(","):
+        keyphrase = keyphrase.strip()
+        wordsInPhrase = keyphrase.split(" ")
+        if len(wordsInPhrase) == 0 or len(keyphrase) == 0:
+            continue
+        elif len(wordsInPhrase) > 1:
+            # In order to search for existence of each word of the phrase in the profile
+            for word in wordsInPhrase:
+                queryKeys.add(word)
+        queryKeys.add(keyphrase)
+
+    serializedProfile = serializeProfileAsString(profile)
+    keywordsFound = dict()
+    for key in queryKeys:
+        foundCount = serializedProfile.count(key)
+        if foundCount > 0:
+            keywordsFound[key] = foundCount
+
+    return keywordsFound
+
+def serializeProfileAsString(profile):
+    serialized = ""
+    for workElem in profile.workSection.elements.all():
+        serialized = serialized + workElem.__str__().lower() + "\n"
+    for educationElem in profile.educationSection.elements.all():
+        serialized = serialized + educationElem.__str__().lower() + "\n"
+    for projectElem in profile.projectSection.elements.all():
+        serialized = serialized + projectElem.__str__().lower() + "\n"
+    for skillElem in profile.skillSection.elements.all():
+        serialized = serialized + skillElem.__str__().lower() + "\n"
+
+    return serialized
+
+@login_required
 def visitProfileAction(request, username):
     if request.method == 'GET':
         user = get_object_or_404(User, username=username)
