@@ -78,18 +78,25 @@
                     </h1>
                     <div class="subheading mb-5">
                         {{ profileOwner.profile.location }} • {{ profileOwner.profile.phone }} •
-                        <a class="gradient-text" href="mailto:name@email.com">{{ profileOwner.email }}</a>
+                        <a class="gradient-text" href="mailto:{{ profileOwner.email }}">{{ profileOwner.email }}</a>
                     </div>
                     <h2 class="gradient-text">
-                        {{ profileOwner.profile.title1 }} | {{ profileOwner.profile.title2 }} | {{ profileOwner.profile.title3 }}
+                        {{ profileOwner.profile.title1 }}{% if profileOwner.profile.title2 %} | {% endif %}{{ profileOwner.profile.title2 }}{% if profileOwner.profile.title3 %} | {% endif %}{{ profileOwner.profile.title3 }}
                     </h2>
                     <p class="lead mb-5">{{ profileOwner.profile.bio }}</p>
                     <div class="social-icons">
-                        <!-- TODO: Don't add if link not available -->
-                        <a class="social-icon" href="{{ profileOwner.profile.linkedin }}"><i class="fab fa-linkedin-in"></i></a>
-                        <a class="social-icon" href="{{ profileOwner.profile.github }}"><i class="fab fa-github"></i></a>
-                        <a class="social-icon" href="{{ profileOwner.profile.twitter }}"><i class="fab fa-twitter"></i></a>
-                        <a class="social-icon" href="{{ profileOwner.profile.facebook }}"><i class="fab fa-facebook-f"></i></a>
+                        {% if profileOwner.profile.linkedin %}
+                            <a class="social-icon" href="{{ profileOwner.profile.linkedin }}"><i class="fab fa-linkedin-in"></i></a>
+                        {% endif %}
+                        {% if profileOwner.profile.github %}
+                            <a class="social-icon" href="{{ profileOwner.profile.github }}"><i class="fab fa-github"></i></a>
+                        {% endif %}
+                        {% if profileOwner.profile.twitter %}
+                            <a class="social-icon" href="{{ profileOwner.profile.twitter }}"><i class="fab fa-twitter"></i></a>
+                        {% endif %}
+                        {% if profileOwner.profile.facebook %}
+                            <a class="social-icon" href="{{ profileOwner.profile.facebook }}"><i class="fab fa-facebook-f"></i></a>
+                        {% endif %}
                     </div>
                     <!-- Add Section Dropdown -->
                     {% if user.get_username == profileOwner.username %}
