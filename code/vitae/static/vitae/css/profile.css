@@ -169,13 +169,12 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
 }
 
 .gradient-text {
-  background: #bd5d38;
-  background: -moz-linear-gradient(-45deg, #bd5d38 0%, #2d46e3 100%);
-  background: -webkit-gradient(left top, right bottom, color-stop(0%, #bd5d38), color-stop(100%, #2d46e3));
-  background: -webkit-linear-gradient(-45deg, #bd5d38 0%, #2d46e3 100%);
-  background: -o-linear-gradient(-45deg, #bd5d38 0%, #2d46e3 100%);
-  background: -ms-linear-gradient(-45deg, #bd5d38 0%, #2d46e3 100%);
-  background: linear-gradient(135deg, #bd5d38 0%, #2d46e3 100%);
+  background: linear-gradient(120deg, #ff692f, #0023ff);
+  background-size: 400% 400%;
+
+  -webkit-animation: AnimationName 12s ease infinite;
+  -moz-animation: AnimationName 12s ease infinite;
+  animation: AnimationName 12s ease infinite;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
@@ -185,14 +184,23 @@ a.gradient-text:hover {
 }
 
 .gradient-bg {
-  background: #bd5d38;
-  background: -moz-linear-gradient(-45deg, #bd5d38 0%, #2d46e3 120%);
-  background: -webkit-gradient(left top, right bottom, color-stop(0%, #bd5d38), color-stop(120%, #2d46e3));
-  background: -webkit-linear-gradient(-45deg, #bd5d38 0%, #2d46e3 120%);
-  background: -o-linear-gradient(-45deg, #bd5d38 0%, #2d46e3 120%);
-  background: -ms-linear-gradient(-45deg, #bd5d38 0%, #2d46e3 120%);
-  background: linear-gradient(135deg, #bd5d38 0%, #2d46e3 120%);
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#9a39a3', endColorstr='#4167a8', GradientType=1 );
+  background: linear-gradient(120deg, #ff692f, #0023ff);
+  background-size: 400% 400%;
+
+  -webkit-animation: AnimationName 12s ease infinite;
+  -moz-animation: AnimationName 12s ease infinite;
+  animation: AnimationName 12s ease infinite;
+}
+
+@-webkit-keyframes AnimationName {
+  0%{background-position:38% 0%}
+  50%{background-position:63% 100%}
+  100%{background-position:38% 0%}
+}
+@keyframes AnimationName {
+  0%{background-position:38% 0%}
+  50%{background-position:63% 100%}
+  100%{background-position:38% 0%}
 }
 
 .title-icon {
