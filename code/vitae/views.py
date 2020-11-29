@@ -110,6 +110,7 @@ def addProfileSection(request, sectionName):
         new_element = WorkExperienceElement(
             profile=profile,
             company_name=form.cleaned_data['company_name'],
+            location=form.cleaned_data['location'],
             job_title=form.cleaned_data['job_title'],
             start_date=form.cleaned_data['start_date'],
             end_date=form.cleaned_data['end_date'],
