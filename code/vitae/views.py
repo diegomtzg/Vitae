@@ -141,18 +141,18 @@ def searchForKeywordsInProfile(profile, keyphrases):
 
 def serializeProfileAsString(profile):
     serialized = ""
-    for workElem in profile.workSection.elements.all():
+    for workElem in profile.workElements.all():
         serialized = serialized + workElem.__str__().lower() + "\n"
-    for educationElem in profile.educationSection.elements.all():
+    for educationElem in profile.educationElements.all():
         serialized = serialized + educationElem.__str__().lower() + "\n"
-    for projectElem in profile.projectSection.elements.all():
+    for projectElem in profile.projectElements.all():
         serialized = serialized + projectElem.__str__().lower() + "\n"
-    for skillElem in profile.skillSection.elements.all():
+    for skillElem in profile.skillElements.all():
         serialized = serialized + skillElem.__str__().lower() + "\n"
 
     return serialized
 
-@login_required
+
 def visitProfileAction(request, username):
     if request.method == 'GET':
         user = get_object_or_404(User, username=username)

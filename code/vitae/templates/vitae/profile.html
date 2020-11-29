@@ -72,9 +72,11 @@
                     <h1 class="mb-0">
                         {{ profileOwner.first_name }}
                         <span class="gradient-text">{{ profileOwner.last_name }}</span>
-                        <a href="{% url 'editProfile' 'about' '0' %}">
-                            <i class="title-icon-small fas fa-edit"></i>
-                        </a>
+                        {% if user.get_username == profileOwner.username %}
+                            <a href="{% url 'editProfile' 'about' '0' %}">
+                                <i class="title-icon-small fas fa-edit"></i>
+                            </a>
+                        {% endif %}
                     </h1>
                     <div class="subheading mb-5">
                         {{ profileOwner.profile.location }} • {{ profileOwner.profile.phone }} •
@@ -243,12 +245,14 @@
                                     <h3 class="mb-0">
                                         <span class="gradient-text">{{ element.company_name }}</span>
                                         – {{ element.location }}
-                                        <a href="{% url 'editProfile' 'work' element.id %}">
-                                            <i class="title-icon fas fa-edit"></i>
-                                        </a>
-                                        <a href="{% url 'removeElement' 'work' element.id %}">
-                                            <i class="title-icon fas fa-trash"></i>
-                                        </a>
+                                        {% if user.get_username == profileOwner.username %}
+                                            <a href="{% url 'editProfile' 'work' element.id %}">
+                                                <i class="title-icon fas fa-edit"></i>
+                                            </a>
+                                            <a href="{% url 'removeElement' 'work' element.id %}">
+                                                <i class="title-icon fas fa-trash"></i>
+                                            </a>
+                                        {% endif %}
                                         </h3>
                                     </h3>
                                     <div class="subheading mb-3">{{ element.job_title }}</div>
@@ -270,12 +274,14 @@
                             <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
                                 <div class="flex-grow-1">
                                     <h3 class="mb-0 gradient-text">{{ element.school_name }}
-                                        <a href="{% url 'editProfile' 'education' element.id %}">
-                                            <i class="title-icon fas fa-edit"></i>
-                                        </a>
-                                        <a href="{% url 'removeElement' 'education' element.id %}">
-                                            <i class="title-icon fas fa-trash"></i>
-                                        </a>
+                                        {% if user.get_username == profileOwner.username %}
+                                            <a href="{% url 'editProfile' 'education' element.id %}">
+                                                <i class="title-icon fas fa-edit"></i>
+                                            </a>
+                                            <a href="{% url 'removeElement' 'education' element.id %}">
+                                                <i class="title-icon fas fa-trash"></i>
+                                            </a>
+                                        {% endif %}
                                     </h3>
                                     <div class="subheading mb-3">{{ element.school_location }}</div>
                                     <div>{{ element.degree }}</div>
@@ -297,12 +303,14 @@
                             <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
                                 <div class="flex-grow-1">
                                     <h3 class="mb-0 gradient-text">{{ element.name }}
-                                        <a href="{% url 'editProfile' 'project' element.id %}">
-                                            <i class="title-icon fas fa-edit"></i>
-                                        </a>
-                                        <a href="{% url 'removeElement' 'project' element.id %}">
-                                            <i class="title-icon fas fa-trash"></i>
-                                        </a>
+                                        {% if user.get_username == profileOwner.username %}
+                                            <a href="{% url 'editProfile' 'project' element.id %}">
+                                                <i class="title-icon fas fa-edit"></i>
+                                            </a>
+                                            <a href="{% url 'removeElement' 'project' element.id %}">
+                                                <i class="title-icon fas fa-trash"></i>
+                                            </a>
+                                        {% endif %}
                                     </h3>
                                     <p>{{ element.description }}</p>
                                 </div>
@@ -322,12 +330,14 @@
                             <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
                                 <div class="flex-grow-1">
                                     <h3 class="mb-0 gradient-text">{{ element.name }}
-                                        <a href="{% url 'editProfile' 'skill' element.id %}">
-                                            <i class="title-icon fas fa-edit"></i>
-                                        </a>
-                                        <a href="{% url 'removeElement' 'skill' element.id %}">
-                                            <i class="title-icon fas fa-trash"></i>
-                                        </a>
+                                        {% if user.get_username == profileOwner.username %}
+                                            <a href="{% url 'editProfile' 'skill' element.id %}">
+                                                <i class="title-icon fas fa-edit"></i>
+                                            </a>
+                                            <a href="{% url 'removeElement' 'skill' element.id %}">
+                                                <i class="title-icon fas fa-trash"></i>
+                                            </a>
+                                        {% endif %}
                                     </h3>
                                     <div class="subheading mb-3">Proficiency: {{ element.proficiency }}/10.0</div>
                                     <p>{{ element.description }}</p>
