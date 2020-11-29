@@ -26,5 +26,6 @@ urlpatterns = [
     path('profile/<str:username>/', views.visitProfileAction, name='profile'),
     path('profile/add/<str:sectionName>/', views.addProfileSection, name='addSection'),
     path('profile/edit/<str:sectionName>/<str:elementId>', views.editProfileElement, name='editProfile'),
+    path('profile/remove/<str:sectionName>/<str:elementId>', views.removeProfileElement, name='removeElement'),
     path('logout', views.logoutAction, name='logout'),
 ]
