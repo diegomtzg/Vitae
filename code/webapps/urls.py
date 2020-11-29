@@ -20,7 +20,7 @@ from vitae import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.searchAction, name='search'),
-    # path('test', views.profileSearch),
+    path('test', views.profileSearch),
     path('register/', views.registerAction, name='register'),
     path('login/', views.loginAction, name='login'),
     path('photos/<str:username>/', views.getPhoto, name='photo'),

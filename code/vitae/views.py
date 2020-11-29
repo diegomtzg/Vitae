@@ -71,7 +71,14 @@ def registerAction(request):
 
 def searchAction(request):
     if request.method == 'GET':
-        return render(request, 'vitae/search.html')
+        return render(request, 'vitae/search.html', context={'form': SearchForm()})
+
+    searchForm = SearchForm(request.POST)
+    if not searchForm.is_valid():
+        return render(request, 'vitae/search.html', context={'form': searchForm})
+
+    print(f"~~~~~ THIS IS THE REQUEST: {request.POST} ~~~~")
+    return render(request, 'vitae/searchResults.html', context={'results': profileSearch(searchForm.cleaned_data['query'])})
 
 def profileSearch(query):
     """
@@ -80,13 +87,18 @@ def profileSearch(query):
     @param query:
     @return: List of string usernames of profiles matching search query.
     """
-    print("~~~ ENTERED PROFILE SEARCH ~~~")
+    print(f"~~~ ENTERED PROFILE SEARCH: {query} ~~~")
     temporaryQuery = "chan zuck, educate, abnormal security, 4.0, distributed systems,"
 
-    allProfiles = Profile.objects.all()
-    for profile in allProfiles:
-        serialized = searchForKeywordsInProfile(profile, temporaryQuery)
-        print(f"Profile: {profile.owner}\n{serialized}\n")
+    validProfiles = []
+    for profile in Profile.objects.all():
+        queryResults = searchForKeywordsInProfile(profile, query)
+        print(f"Profile: {profile.owner}\n{queryResults}\n")
+        if len(queryResults.keys()) > 0:
+            validProfiles.append(profile.owner)
+
+    print(validProfiles)
+    return validProfiles
 
 def searchForKeywordsInProfile(profile, keyphrases):
     # Build the profile query keys

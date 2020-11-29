@@ -45,6 +45,10 @@ class LoginForm(forms.Form):
         return clean_data
 
 
+class SearchForm(forms.Form):
+    query = forms.CharField(widget=forms.TextInput(attrs={'placeholder': "Search", 'id': "search", 'autocomplete': "off"}))
+
+
 class WorkExperienceForm(forms.ModelForm):
     class Meta:
         model = WorkExperienceElement
