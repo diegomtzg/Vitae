@@ -67,7 +67,9 @@
                     <h1 class="mb-0">
                         {{ profileOwner.first_name }}
                         <span class="gradient-text">{{ profileOwner.last_name }}</span>
-                        <i class="title-icon fas fa-edit"></i>
+                        <a href="{% url 'editProfile' 'about' '0' %}">
+                            <i class="title-icon fas fa-edit"></i>
+                        </a>
                     </h1>
                     <div class="subheading mb-5">
                         {{ profileOwner.profile.location }} • {{ profileOwner.profile.phone }} •
@@ -116,7 +118,7 @@
                                         <span aria-hidden="true">&times;</span>
                                     </button>
                                 </div>
-                                <form method="POST" action="{% url 'editProfile' 'work' %}">
+                                <form method="POST" action="{% url 'addSection' 'work' %}">
                                     <div id="modal-form-div" class="modal-body">
                                         {{ addWorkExperienceForm.non_field_errors }}
                                         {% for field in addWorkExperienceForm %}
@@ -143,7 +145,7 @@
                                         <span aria-hidden="true">&times;</span>
                                     </button>
                                 </div>
-                                <form method="POST" action="{% url 'editProfile' 'education' %}">
+                                <form method="POST" action="{% url 'addSection' 'education' %}">
                                     <div id="modal-form-div" class="modal-body">
                                         {{ addEducationForm.non_field_errors }}
                                         {% for field in addEducationForm  %}
@@ -170,7 +172,7 @@
                                         <span aria-hidden="true">&times;</span>
                                     </button>
                                 </div>
-                                <form method="POST" action="{% url 'editProfile' 'project' %}">
+                                <form method="POST" action="{% url 'addSection' 'project'%}">
                                     <div id="modal-form-div" class="modal-body">
                                         {{ addProjectForm.non_field_errors }}
                                         {% for field in addProjectForm  %}
@@ -197,7 +199,7 @@
                                         <span aria-hidden="true">&times;</span>
                                     </button>
                                 </div>
-                                <form method="POST" action="{% url 'editProfile' 'skill' %}">
+                                <form method="POST" action="{% url 'addSection' 'skill'%}">
                                     <div id="modal-form-div" class="modal-body">
                                         {{ addSkillForm.non_field_errors }}
                                         {% for field in addSkillForm  %}
@@ -229,7 +231,9 @@
                                     <h3 class="mb-0">
                                         <span class="gradient-text">{{ element.company_name }}</span>
                                         – Mountain View, CA{{ element.location }}
-                                        <i class="title-icon fas fa-edit"></i>
+                                        <a href="{% url 'editProfile' 'work' element.id %}">
+                                            <i class="title-icon fas fa-edit"></i>
+                                        </a>
                                         </h3>
                                     </h3>
                                     <div class="subheading mb-3">{{ element.job_title }}</div>
@@ -251,7 +255,9 @@
                             <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
                                 <div class="flex-grow-1">
                                     <h3 class="mb-0 gradient-text">{{ element.school_name }}
-                                        <i class="title-icon fas fa-edit"></i>
+                                        <a href="{% url 'editProfile' 'education' element.id %}">
+                                            <i class="title-icon fas fa-edit"></i>
+                                        </a>
                                     </h3>
                                     <div class="subheading mb-3">{{ element.school_location }}</div>
                                     <div>{{ element.degree }}</div>
@@ -273,7 +279,9 @@
                             <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
                                 <div class="flex-grow-1">
                                     <h3 class="mb-0 gradient-text">{{ element.name }}
-                                        <i class="title-icon fas fa-edit"></i>
+                                        <a href="{% url 'editProfile' 'project' element.id %}">
+                                            <i class="title-icon fas fa-edit"></i>
+                                        </a>
                                     </h3>
                                     <p>{{ element.description }}</p>
                                 </div>
@@ -293,7 +301,9 @@
                             <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
                                 <div class="flex-grow-1">
                                     <h3 class="mb-0 gradient-text">{{ element.name }}
-                                        <i class="title-icon fas fa-edit"></i>
+                                        <a href="{% url 'editProfile' 'skill' element.id %}">
+                                            <i class="title-icon fas fa-edit"></i>
+                                        </a>
                                     </h3>
                                     <div class="subheading mb-3">Proficiency: {{ element.proficiency }}/10.0</div>
                                     <p>{{ element.description }}</p>

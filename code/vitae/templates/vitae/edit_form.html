@@ -1,0 +1,41 @@
+{% extends 'vitae/base.html' %}
+{% block page_title %}
+    Login
+    Edit Section | Vitae
+{% endblock %}
+
+{% block page_css %}
+    {% load static %}
+    <link href="{% static 'vitae/css/signup.css' %}" rel="stylesheet" media="all">
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="wrapper wrapper--w790 p-t-180">
+            <div class="card card-5">
+                <div class="card-heading">
+                    <h2 class="title">Vitae | Edit Section</h2>
+                </div>
+                <div class="card-body">
+                    <form method="POST" action="{% url 'editProfile' section id %}">
+                        {{ form.non_field_errors }}
+                        {% csrf_token %}
+                        {% for field in form %}
+                        <div class="form-row">
+                            <div class="name">{{ field.label }}</div>
+                            <div class="value">
+                                <div class="input-group">
+                                    {{ field }}
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                        <div>
+                            <button class="btn btn--radius-2 btn--red" type="submit">Save</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
