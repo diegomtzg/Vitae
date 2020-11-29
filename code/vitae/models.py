@@ -62,14 +62,3 @@ class SkillElement(models.Model):
 
     def __str__(self):
         return "%s" % (self.name)
-""" END OF SECTION ELEMENTS """
-
-
-# Helper method to initialize a profile's empty sections
-# TODO: Consider adding to profile class?
-def initSections(profile):
-    AboutSection(profile=profile).save()
-    WorkExperienceSection(profile=profile).save()
-    EducationSection(profile=profile).save()
-    ProjectSection(profile=profile).save()
-    SkillSection(profile=profile).save()
