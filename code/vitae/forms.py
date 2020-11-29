@@ -73,6 +73,10 @@ class AboutForm(forms.Form):
     title3 = forms.CharField(required=False, widget=forms.TextInput(attrs={'class': 'input--style-5'}))
 
 
+class SearchForm(forms.Form):
+    query = forms.CharField(widget=forms.TextInput(attrs={'placeholder': "Search", 'id': "search", 'autocomplete': "off"}))
+
+
 class WorkExperienceForm(forms.ModelForm):
     class Meta:
         model = WorkExperienceElement
