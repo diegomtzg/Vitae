@@ -93,7 +93,6 @@ def searchAction(request):
     if not searchForm.is_valid():
         return render(request, 'vitae/search.html', context={'form': searchForm})
 
-    print(f"~~~~~ THIS IS THE REQUEST: {request.POST} ~~~~")
     return render(request, 'vitae/searchResults.html', context={'results': profileSearch(searchForm.cleaned_data['query'])})
 
 def profileSearch(query):
@@ -103,18 +102,20 @@ def profileSearch(query):
     @param query:
     @return: List of string usernames of profiles matching search query.
     """
-    print(f"~~~ ENTERED PROFILE SEARCH: {query} ~~~")
-    temporaryQuery = "chan zuck, educate, abnormal security, 4.0, distributed systems,"
-
-    validProfiles = []
+    validProfiles = dict()
     for profile in Profile.objects.all():
         queryResults = searchForKeywordsInProfile(profile, query)
         print(f"Profile: {profile.owner}\n{queryResults}\n")
         if len(queryResults.keys()) > 0:
-            validProfiles.append(profile.owner)
+            validProfiles[profile.owner] = sum(queryResults.values())
 
-    print(validProfiles)
-    return validProfiles
+    # Sort dictionary keys by decreasing value and return list of sorted keys
+    sortedProfiles = dict(sorted(
+        validProfiles.items(),
+        key=lambda profile: profile[1],
+        reverse=True,
+    ))
+    return list(sortedProfiles.keys())
 
 def searchForKeywordsInProfile(profile, keyphrases):
     # Build the profile query keys
