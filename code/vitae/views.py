@@ -361,7 +361,6 @@ def removeProfileElement(request, sectionName, elementId):
         return redirect(reverse('profile', args=[request.user]))
 
 
-@login_required
 def getPhoto(request, username):
     profile = get_object_or_404(User, username=username).profile
     return HttpResponse(profile.profile_pic, content_type=profile.profile_pic_ctype)
