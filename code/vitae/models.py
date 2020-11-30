@@ -18,6 +18,13 @@ class Profile(models.Model):
     title2 = models.CharField(max_length=MAX_LENGTH)
     title3 = models.CharField(max_length=MAX_LENGTH)
 
+    def __str__(self):
+        return ("%s, %s, %s, %s, %s, %s, %s, %s, %s, %s" % (
+            self.owner, self.bio, self.location,
+            self.linkedin, self.facebook, self.twitter, self.github,
+            self.title1, self.title2, self.title3)
+        ).replace(",", " ")
+
 class WorkExperienceElement(models.Model):
     profile = models.ForeignKey(Profile, related_name='workElements', on_delete=models.CASCADE)
     company_name = models.CharField(max_length=MAX_LENGTH)
