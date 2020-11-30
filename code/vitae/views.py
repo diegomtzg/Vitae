@@ -149,6 +149,7 @@ def serializeProfileAsString(profile):
         serialized = serialized + projectElem.__str__().lower() + "\n"
     for skillElem in profile.skillElements.all():
         serialized = serialized + skillElem.__str__().lower() + "\n"
+    serialized = serialized + profile.__str__().lower() + "\n"
 
     return serialized
 
