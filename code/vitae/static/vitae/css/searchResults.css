@@ -615,6 +615,18 @@ main {
   animation: AnimationName 12s ease infinite;
 }
 
+.results-text {
+  color: #495057;
+}
+
+a:hover {
+  text-decoration: none;
+}
+
+.results-text:hover {
+  color: #bd5d38;
+}
+
 @-webkit-keyframes AnimationName {
   0%{background-position:38% 0%}
   50%{background-position:63% 100%}
@@ -631,7 +643,6 @@ main {
 }
 
 .avatar {
-  max-width: 10rem;
   max-width: 10rem;
   max-height: 10rem;
   border: 0.5rem solid rgba(255, 255, 255, 0.2);
