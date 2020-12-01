@@ -38,6 +38,8 @@ def registerAction(request):
     if not registerForm.is_valid():
         return render(request, 'vitae/register.html', {'form': registerForm, 'searchForm': NavSearchForm()})
 
+    print("Valid register POST request received: ", request.POST)
+    # TODO: If user with request.username exists, then skip this new user creation
     newUser = User.objects.create_user(
         username=registerForm.cleaned_data['username'],
         email=registerForm.cleaned_data['email'],
@@ -78,6 +80,18 @@ def registerAction(request):
 
     # After logging user in, redirect them to their profile.
     return redirect(reverse('profile', args=[newUser.username]))
+
+
+def postOauthLogin(request):
+    # Check if a profile exists with owner = request.user
+    if not Profile.objects.filter(owner=request.user).exists():
+        # Create new profile with owner
+        newProfile = Profile(owner=request.user)
+        newProfile.save()
+        print("New profile created for new user:", newProfile)
+
+    # After logging user in, redirect them to their profile.
+    return redirect(reverse('profile', args=[request.user]))
 
 
 def searchAction(request):
