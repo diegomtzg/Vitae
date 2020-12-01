@@ -71,7 +71,8 @@ SOCIAL_AUTH_GOOGLE_OAUTH2_AUTH_EXTRA_ARGUMENTS = {'prompt': 'select_account'}
 LOGIN_URL = '/oauth/login/google-oauth2/'
 
 # Default URL to redirect to after a user logs in.
-LOGIN_REDIRECT_URL = '/'
+# TODO: Redirect to profile
+LOGIN_REDIRECT_URL = '/post-oauth/'
 
 TEMPLATES = [
     {

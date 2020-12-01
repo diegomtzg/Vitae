@@ -23,6 +23,7 @@ urlpatterns = [
     path('oauth/', include('social_django.urls', namespace='social')),
     path('register/', views.registerAction, name='register'),
     path('login/', views.loginAction, name='login'),
+    path('post-oauth/', views.postOauthLogin, name='post-oauth'),
     path('photos/<str:username>/', views.getPhoto, name='photo'),
     path('profile/<str:username>/', views.visitProfileAction, name='profile'),
     path('profile/add/<str:sectionName>/', views.addProfileSection, name='addSection'),
