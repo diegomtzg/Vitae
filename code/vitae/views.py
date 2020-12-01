@@ -93,7 +93,9 @@ def searchAction(request):
     if not searchForm.is_valid():
         return render(request, 'vitae/search.html', context={'form': searchForm})
 
-    return render(request, 'vitae/searchResults.html', context={'results': profileSearch(searchForm.cleaned_data['query'])})
+    searchResults = profileSearch(searchForm.cleaned_data['query'])
+
+    return render(request, 'vitae/searchResults.html', context={'results': searchResults})
 
 def profileSearch(query):
     """
@@ -102,20 +104,30 @@ def profileSearch(query):
     @param query:
     @return: List of string usernames of profiles matching search query.
     """
-    validProfiles = dict()
+    validUsers = dict()
     for profile in Profile.objects.all():
         queryResults = searchForKeywordsInProfile(profile, query)
         print(f"Profile: {profile.owner}\n{queryResults}\n")
         if len(queryResults.keys()) > 0:
-            validProfiles[profile.owner] = sum(queryResults.values())
+            validUsers[profile.owner] = sum(queryResults.values())
 
-    # Sort dictionary keys by decreasing value and return list of sorted keys
-    sortedProfiles = dict(sorted(
-        validProfiles.items(),
+    # Sort dictionary keys by decreasing value and return sorted results struct
+    sortedUsers = dict(sorted(
+        validUsers.items(),
         key=lambda profile: profile[1],
         reverse=True,
     ))
-    return list(sortedProfiles.keys())
+
+    results = []
+    for user in sortedUsers.keys():
+        profile = Profile.objects.get(owner=user)
+
+        # Retrieve user's Profile name, titles, and first max. 175 chars of bio
+        userProfileName = f"{user.first_name.capitalize()} {user.last_name.capitalize()}"
+        titles = f"{profile.title1} | {profile.title2} | {profile.title3}"
+        bio = profile.bio if len(profile.bio) < 175 else f"{profile.bio[:172]}..."
+        results.append([user, userProfileName, titles, bio])
+    return results
 
 def searchForKeywordsInProfile(profile, keyphrases):
     # Build the profile query keys

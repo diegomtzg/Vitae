@@ -11,18 +11,20 @@
 {% block content %}
     <div class="container">
         <div class="wrapper wrapper--w790 p-t-180">
-            <div class="card card-5">
-                <div class="card-heading">
-                    <h2 class="title">Vitae - Search  Results</h2>
-                </div>
-                <div class="card-body">
-                    <ul>
-                        {% for username in results %}
-                            <li><a href="{% url 'profile' username %}">Profile for {{username}}</li>
-                        {% endfor %}
-                    </ul>
-                </div>
-            </div>
+            {% for profileStruct in results %}
+                <a href="{% url 'profile' profileStruct.0 %}">
+                    <div class="card card-5">
+                        <div class="card-heading">
+                            <h2 class="title">{{ profileStruct.1 }}</h2>
+                        </div>
+                        <div class="card-body">
+                            <h4>{{ profileStruct.2 }}</h4> <br>
+                            {{ profileStruct.3 }}
+                        </div>
+                    </div>
+                </a>
+                <br><br>
+            {% endfor %}
         </div>
     </div>
 </body>
