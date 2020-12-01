@@ -13,7 +13,7 @@
         <div class="wrapper wrapper--w790 p-t-180">
             {% for user in results %}
                 <a href="{% url 'profile' user %}">
-                    <div class="card card-5">
+                    <div class="results-text card card-5">
                         <div class="card-heading">
                             <h2 class="title">{{ user.first_name }} {{ user.last_name }}</h2>
                         </div>
@@ -30,7 +30,7 @@
                             {% endif %}
                             </div>
 
-                            <div class="col">
+                            <div class="results-text col">
                             <h4>
                                 {{ user.profile.title1 }}{% if user.profile.title2 %} | {% endif %}{{ user.profile.title2 }}{% if user.profile.title3 %} | {% endif %}{{ user.profile.title3 }}
                             </h4>
