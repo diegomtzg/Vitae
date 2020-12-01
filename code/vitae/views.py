@@ -1,12 +1,8 @@
 from django.conf import settings
 from django.shortcuts import render, redirect, reverse, get_object_or_404
 from django.http import HttpResponse
-from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth import login, logout
 from django.contrib.auth.decorators import login_required
-from django.core.files import File
-
-from django.contrib.auth.models import User
-from vitae.models import *
 from vitae.forms import *
 
 
@@ -19,11 +15,11 @@ def loginAction(request):
         if request.user.is_authenticated:
             return redirect(reverse('profile', args=[request.user.username]))
 
-        return render(request, 'vitae/login.html', {'form': LoginForm()})
+        return render(request, 'vitae/login.html', {'form': LoginForm(), 'searchForm': NavSearchForm()})
 
     form = LoginForm(request.POST)
     if not form.is_valid():
-        return render(request, 'vitae/login.html', {'form': form})
+        return render(request, 'vitae/login.html', {'form': form, 'searchForm': NavSearchForm()})
 
     user = authenticate(username=form.cleaned_data['username'],
                         password=form.cleaned_data['password'])
@@ -35,14 +31,13 @@ def loginAction(request):
 def registerAction(request):
     # Send empty register form for user to fill out.
     if request.method == 'GET':
-        return render(request, 'vitae/register.html', {'form': RegisterForm()})
+        return render(request, 'vitae/register.html', {'form': RegisterForm(), 'searchForm': NavSearchForm()})
 
     # Received register form. Validate and create new user.
     registerForm = RegisterForm(request.POST, request.FILES)
     if not registerForm.is_valid():
-        return render(request, 'vitae/register.html', {'form': registerForm})
+        return render(request, 'vitae/register.html', {'form': registerForm, 'searchForm': NavSearchForm()})
 
-    print("Valid register POST request received: ", request.POST)
     newUser = User.objects.create_user(
         username=registerForm.cleaned_data['username'],
         email=registerForm.cleaned_data['email'],
@@ -95,7 +90,8 @@ def searchAction(request):
 
     searchResults = profileSearch(searchForm.cleaned_data['query'])
 
-    return render(request, 'vitae/searchResults.html', context={'results': searchResults})
+    return render(request, 'vitae/searchResults.html', context={'results': searchResults, 'searchForm': NavSearchForm()} )
+
 
 def profileSearch(query):
     """
@@ -107,7 +103,6 @@ def profileSearch(query):
     validUsers = dict()
     for profile in Profile.objects.all():
         queryResults = searchForKeywordsInProfile(profile, query)
-        print(f"Profile: {profile.owner}\n{queryResults}\n")
         if len(queryResults.keys()) > 0:
             validUsers[profile.owner] = sum(queryResults.values())
 
@@ -120,14 +115,9 @@ def profileSearch(query):
 
     results = []
     for user in sortedUsers.keys():
-        profile = Profile.objects.get(owner=user)
-
-        # Retrieve user's Profile name, titles, and first max. 175 chars of bio
-        userProfileName = f"{user.first_name.capitalize()} {user.last_name.capitalize()}"
-        titles = f"{profile.title1} | {profile.title2} | {profile.title3}"
-        bio = profile.bio if len(profile.bio) < 175 else f"{profile.bio[:172]}..."
-        results.append([user, userProfileName, titles, bio])
+        results.append(user)
     return results
+
 
 def searchForKeywordsInProfile(profile, keyphrases):
     # Build the profile query keys
@@ -151,6 +141,7 @@ def searchForKeywordsInProfile(profile, keyphrases):
             keywordsFound[key] = foundCount
 
     return keywordsFound
+
 
 def serializeProfileAsString(profile):
     serialized = ""
@@ -312,7 +303,7 @@ def editProfileElement(request, sectionName, elementId):
                 'title2': request.user.profile.title2,
                 'title3': request.user.profile.title3,
             })
-            return render(request, 'vitae/edit_form.html', {'form': form, 'section': 'about', 'id': id})
+            return render(request, 'vitae/edit_form.html', {'form': form, 'section': 'about', 'id': id, 'searchForm': NavSearchForm()})
         else:
             form = AboutForm(request.POST, request.FILES)
             if form.is_valid():
@@ -387,7 +378,8 @@ def getProfileContext(profileOwner):
         'addEducationForm': EducationForm(),
         'addProjectForm': ProjectsForm(),
         'addSkillForm': SkillsForm(),
-        'workElements': profileOwner.profile.workElements.all(), # TODO: Sort in chronological order
+        'searchForm': NavSearchForm(),
+        'workElements': profileOwner.profile.workElements.all(),
         'educationElements': profileOwner.profile.educationElements.all(),
         'projectElements': profileOwner.profile.projectElements.all(),
         'skillElements': profileOwner.profile.skillElements.all(),

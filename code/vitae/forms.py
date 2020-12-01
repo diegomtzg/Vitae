@@ -56,6 +56,14 @@ class LoginForm(forms.Form):
         return clean_data
 
 
+class SearchForm(forms.Form):
+    query = forms.CharField(widget=forms.TextInput(attrs={'placeholder': "Search", 'id': "search", 'autocomplete': "off"}))
+
+
+class NavSearchForm(forms.Form):
+    query = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Search profiles', 'aria-label': 'Search', 'class': 'form-control mr-sm-2'}))
+
+
 class AboutForm(forms.Form):
     profile_picture = forms.FileField(required=False)
     first_name = forms.CharField(widget=forms.TextInput(attrs={'class':'input--style-5'}))
@@ -71,10 +79,6 @@ class AboutForm(forms.Form):
     title1 = forms.CharField(required=False, widget=forms.TextInput(attrs={'class': 'input--style-5'}))
     title2 = forms.CharField(required=False, widget=forms.TextInput(attrs={'class': 'input--style-5'}))
     title3 = forms.CharField(required=False, widget=forms.TextInput(attrs={'class': 'input--style-5'}))
-
-
-class SearchForm(forms.Form):
-    query = forms.CharField(widget=forms.TextInput(attrs={'placeholder': "Search", 'id': "search", 'autocomplete': "off"}))
 
 
 class WorkExperienceForm(forms.ModelForm):

@@ -604,7 +604,7 @@ main {
   padding: 0 26px;
   padding-bottom: 100px;
   width: 100%;
-  height: 180%;
+  height: auto;
   overflow: hidden;
   background: #bd5d38;
   background: linear-gradient(120deg, #ff692f, #0023ff);
@@ -625,3 +625,4 @@ main {
   50%{background-position:63% 100%}
   100%{background-position:38% 0%}
 }
+
