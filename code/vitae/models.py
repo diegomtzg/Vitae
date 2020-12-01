@@ -19,8 +19,8 @@ class Profile(models.Model):
     title3 = models.CharField(max_length=MAX_LENGTH)
 
     def __str__(self):
-        return ("%s, %s, %s, %s, %s, %s, %s, %s, %s, %s" % (
-            self.owner, self.bio, self.location,
+        return ("%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s" % (
+            self.owner, self.owner.first_name, self.owner.last_name, self.bio, self.location,
             self.linkedin, self.facebook, self.twitter, self.github,
             self.title1, self.title2, self.title3)
         ).replace(",", " ")
