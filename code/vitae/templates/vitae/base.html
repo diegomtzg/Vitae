@@ -60,10 +60,10 @@
             <ul class="navbar-nav mr-auto"></ul>
             <div>
                 <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/"><i class="fas fa-home"></i></a>
+                    </li>
                     {% if user.is_authenticated %}
-                        <li class="nav-item">
-                            <a class="nav-link" href="/"><i class="fas fa-home"></i></a>
-                        </li>
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'profile' user.username %}">My Profile</a>
                         </li>
@@ -71,7 +71,14 @@
                             <a class="nav-link" href="{% url 'logout' %}">Sign Out</a>
                         </li>
                     {% else %}
-                        {% block nav-links %}{% endblock %}
+                        <ul class="navbar-nav mr-auto">
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'login' %}">Login<span class="sr-only">(current)</span></a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'register' %}">Register</a>
+                            </li>
+                        </ul>
                     {% endif %}
                 </ul>
             </div>
