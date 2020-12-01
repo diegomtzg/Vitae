@@ -44,20 +44,6 @@
         <script src="{% static 'vitae/js/search.js' %}"></script>
 {% endblock %}
 
-{% block nav-links %}
-    <ul class="navbar-nav mr-auto">
-        <li class="nav-item active">
-            <a class="nav-link" href="/"><i class="fas fa-home"></i></a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="{% url 'login' %}">Login<span class="sr-only">(current)</span></a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="{% url 'register' %}">Register</a>
-        </li>
-    </ul>
-{% endblock %}
-
 <!-- Empty search box in this page so we don't have duplicate ones -->
 {% block search-box %}
 {% endblock %}
