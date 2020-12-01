@@ -34,7 +34,7 @@ main {
   margin: 0 auto;
   padding: 0 26px;
   width: 100%;
-  height: 100%;
+  height: auto;
   background: linear-gradient(120deg, #ff692f, #0023ff);
   background-size: 400% 400%;
 
