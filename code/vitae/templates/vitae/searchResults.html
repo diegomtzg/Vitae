@@ -19,12 +19,25 @@
                         </div>
                         <!-- Do not show card body if user does not have a bio or any titles -->
                         {% if user.profile.bio or user.profile.title1 or user.profile.title2 or user.profile.title3 %}
-                        <div class="card-body">
+                        <div class="container card-body">
+
+                            <div class="row justify-content-md-center">
+                            <div class="col col-lg-3">
+                            {% if user.profile.profile_pic %}
+                                <img class="img-fluid avatar rounded-circle mx-auto mb-2" src="{% url 'photo' user %}" alt="" />
+                            {% else %}
+                                <img class="img-fluid avatar rounded-circle mx-auto mb-2" src="{% static 'vitae/assets/img/defaultProfilePic.jpg' %}" alt="" />
+                            {% endif %}
+                            </div>
+
+                            <div class="col">
                             <h4>
                                 {{ user.profile.title1 }}{% if user.profile.title2 %} | {% endif %}{{ user.profile.title2 }}{% if user.profile.title3 %} | {% endif %}{{ user.profile.title3 }}
                             </h4>
                             <br>
                             {{ user.profile.bio|truncatechars:175 }}
+                            </div>
+                            </div>
                         </div>
                         {% endif %}
                     </div>
