@@ -49,7 +49,7 @@
         <div class="collapse navbar-collapse" id="navbarCollapse">
 
         {% block search-box %}
-            <form class="form-inline mt-0 mt-md-0">
+            <form method="POST" action="{% url 'search' %}" class="form-inline mt-0 mt-md-0">
                 <input class="form-control mr-sm-2" type="text" placeholder="Search profiles" aria-label="Search">
                 <button class="btn btn-outline-warning my-2 my-sm-0" type="submit">Search</button>
             </form>
