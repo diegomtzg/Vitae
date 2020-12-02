@@ -1,4 +1,5 @@
 *.pyc
+config.ini
 db.sqlite3
 migrations
 *.idea
