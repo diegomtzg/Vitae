@@ -17,48 +17,19 @@
                     <h2 class="title">Vitae - Register</h2>
                 </div>
                 <div class="card-body">
-                    <div class="text-center">
-                        <a href="{% url 'social:begin' 'google-oauth2' %}">
-                            <img class="img-fluid mx-auto mb-2" src="{% static 'vitae/assets/img/btn_google_signin_light_normal_web@1_5x.png' %}" alt="" />
-                        </a>
-                    </div>
-                    <div style="width: 100%; height: 20px; border-bottom: 1px solid gray; text-align: center">
-                      <span style="font-size: 25px; color: gray; background-color: #F3F5F6; padding: 0 10px;">
-                        Or
-                      </span>
-                    </div>
-                    <form enctype="multipart/form-data" method="POST" action="{% url 'register' %}">
+                    <form enctype="multipart/form-data" method="POST" action="{% url 'registerWithOauth' %}">
                         <div class="form-row">
                             {{ form.non_field_errors }}
                         </div>
                         {% csrf_token %}
-                        <div class="form-row m-b-55">
-                            <div class="name">Name</div>
-                            <div class="value">
-                                <div class="row row-space">
-                                    <div class="col">
-                                        <div class="input-group-desc">
-                                            {{ form.first_name }}
-                                            <label class="label--desc">first name</label>
-                                        </div>
-                                    </div>
-                                    <div class="col">
-                                        <div class="input-group-desc">
-                                            {{ form.last_name }}
-                                            <label class="label--desc">last name</label>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                         <div class="form-row m-b-55">
                             <div class="name">Contact Information</div>
                             <div class="value">
                                 <div class="row row-space">
                                     <div class="col">
                                         <div class="input-group-desc">
-                                            {{ form.email }}
-                                            <label class="label--desc">email</label>
+                                            {{ form.location }}
+                                            <label class="label--desc">address</label>
                                         </div>
                                     </div>
                                     <div class="col">
@@ -70,41 +41,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="form-row">
-                            <div class="name">Username</div>
-                            <div class="value">
-                                <div class="input-group">
-                                    {{ form.username }}
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-row m-b-55">
-                            <div class="name">Password</div>
-                            <div class="value">
-                                <div class="row row-space">
-                                    <div class="col">
-                                        <div class="input-group-desc">
-                                            {{ form.password }}
-                                            <label class="label--desc">password</label>
-                                        </div>
-                                    </div>
-                                    <div class="col">
-                                        <div class="input-group-desc">
-                                            {{ form.confirm_password }}
-                                            <label class="label--desc">confirm password</label>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="name">Address</div>
-                            <div class="value">
-                                <div class="input-group">
-                                    {{ form.location }}
-                                </div>
-                            </div>
-                        </div>
+
                         <div class="form-row m-b-55">
                             <div class="name">Socials</div>
                             <div class="value">

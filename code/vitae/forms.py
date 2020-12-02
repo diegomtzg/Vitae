@@ -39,6 +39,34 @@ class RegisterForm(forms.Form):
 
         return clean_data
 
+class RegisterWithOauthForm(forms.Form):
+    # first_name = forms.CharField(widget=forms.TextInput(attrs={'class':'input--style-5'}))
+    # last_name = forms.CharField(widget=forms.TextInput(attrs={'class':'input--style-5'}))
+    # email = forms.EmailField(widget=forms.EmailInput(attrs={'class':'input--style-5'}))
+    phone = forms.CharField(required=False, widget=forms.TextInput(attrs={'class': 'input--style-5'}))
+    # username = forms.CharField(widget=forms.TextInput(attrs={'class':'input--style-5'}))
+    # password = forms.CharField(widget=forms.PasswordInput(attrs={'class':'input--style-5'}))
+    # confirm_password = forms.CharField(widget=forms.PasswordInput(attrs={'class':'input--style-5'}))
+    location = forms.CharField(required=False, widget=forms.TextInput(attrs={'class': 'input--style-5'}))
+    twitter = forms.URLField(required=False, widget=forms.TextInput(attrs={'class': 'input--style-5'}))
+    github = forms.URLField(required=False, widget=forms.TextInput(attrs={'class': 'input--style-5'}))
+    linkedin = forms.URLField(required=False, widget=forms.TextInput(attrs={'class': 'input--style-5'}))
+    facebook = forms.URLField(required=False, widget=forms.TextInput(attrs={'class': 'input--style-5'}))
+    bio = forms.CharField(required=False, widget=forms.TextInput(attrs={'class': 'input--style-5'}))
+    title1 = forms.CharField(required=False, widget=forms.TextInput(attrs={'class': 'input--style-5'}))
+    title2 = forms.CharField(required=False, widget=forms.TextInput(attrs={'class': 'input--style-5'}))
+    title3 = forms.CharField(required=False, widget=forms.TextInput(attrs={'class': 'input--style-5'}))
+    profile_picture = forms.FileField(required=False)
+
+    def clean(self):
+        clean_data = super().clean()
+
+        # # Verify that username is unique.
+        # username = clean_data['username']
+        # if User.objects.all().filter(username__exact=username):
+        #     raise forms.ValidationError("Username already exists.")
+
+        return clean_data
 
 class LoginForm(forms.Form):
     username = forms.CharField(widget=forms.TextInput(attrs={'class':'input--style-5', 'placeholder': 'Username'}))
