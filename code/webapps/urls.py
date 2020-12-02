@@ -14,14 +14,17 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 from vitae import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.searchAction, name='search'),
+    path('oauth/', include('social_django.urls', namespace='social')),
     path('register/', views.registerAction, name='register'),
+    path('registerWithOauth/', views.registerWithOauthAction, name='registerWithOauth'),
     path('login/', views.loginAction, name='login'),
+    path('post-oauth/', views.postOauthLogin, name='post-oauth'),
     path('photos/<str:username>/', views.getPhoto, name='photo'),
     path('profile/<str:username>/', views.visitProfileAction, name='profile'),
     path('profile/add/<str:sectionName>/', views.addProfileSection, name='addSection'),
