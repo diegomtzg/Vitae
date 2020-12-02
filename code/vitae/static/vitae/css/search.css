@@ -201,5 +201,6 @@ h1, .h1 {
 
 main {
   height: 100%;
+  min-height: 100vh;
 }
 
