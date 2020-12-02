@@ -263,7 +263,8 @@ def addProfileSection(request, sectionName):
             name=form.cleaned_data['name'],
             description=form.cleaned_data['description'],
             start_date=form.cleaned_data['start_date'],
-            end_date=form.cleaned_data['end_date'])
+            end_date=form.cleaned_data['end_date'],
+            url=form.cleaned_data['url'])
         new_element.save()
         print("New project profile element")
 

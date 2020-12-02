@@ -56,8 +56,8 @@ class ProjectElement(models.Model):
     description = models.TextField()
     start_date = models.CharField(max_length=MAX_LENGTH)
     end_date = models.CharField(max_length=MAX_LENGTH)
+    url = models.URLField(blank=True, max_length=MAX_LENGTH)
     # TODO: Add photos/videos
-    # TODO: Add hyperlinks to additional resources (e.g. videos, github repos)
 
     def __str__(self):
         return "%s, %s" % (self.name, self.description)
