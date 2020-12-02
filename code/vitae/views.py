@@ -403,7 +403,7 @@ def removeProfileElement(request, sectionName, elementId):
         element = request.user.profile.educationElements.get(id=id)
         element.delete()
         return redirect(reverse('profile', args=[request.user]))
-    if sectionName == 'projects':
+    if sectionName == 'project':
         element = request.user.profile.projectElements.get(id=id)
         element.delete()
         return redirect(reverse('profile', args=[request.user]))
