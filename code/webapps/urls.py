@@ -22,6 +22,7 @@ urlpatterns = [
     path('', views.searchAction, name='search'),
     path('oauth/', include('social_django.urls', namespace='social')),
     path('register/', views.registerAction, name='register'),
+    path('registerWithOauth/', views.registerWithOauthAction, name='registerWithOauth'),
     path('login/', views.loginAction, name='login'),
     path('post-oauth/', views.postOauthLogin, name='post-oauth'),
     path('photos/<str:username>/', views.getPhoto, name='photo'),

@@ -81,15 +81,73 @@ def registerAction(request):
     # After logging user in, redirect them to their profile.
     return redirect(reverse('profile', args=[newUser.username]))
 
+def registerWithOauthAction(request):
+    # Send empty register form for user to fill out.
+    if request.method == 'GET':
+        return render(request, 'vitae/registerWithOauth.html', {'form': RegisterWithOauthForm(), 'searchForm': NavSearchForm()})
+
+    # Received register form. Validate and create new user.
+    registerWithOauthForm = RegisterWithOauthForm(request.POST, request.FILES)
+    if not registerWithOauthForm.is_valid():
+        return render(request, 'vitae/registerWithOauth.html', {'form': registerWithOauthForm, 'searchForm': NavSearchForm()})
+
+    print("Valid register POST request received: ", request.POST)
+    # # TODO: If user with request.username exists, then skip this new user creation
+    # newUser = User.objects.create_user(
+    #     username=registerForm.cleaned_data['username'],
+    #     email=registerForm.cleaned_data['email'],
+    #     password=registerForm.cleaned_data['password'],
+    #     first_name=registerForm.cleaned_data['first_name'],
+    #     last_name=registerForm.cleaned_data['last_name'])
+    # newUser.save()
+    # print("New user created:", newUser)
+
+    # Create new empty profile associated with user
+    newProfile = Profile(
+        owner=request.user,
+        bio=registerWithOauthForm.cleaned_data['bio'],
+        phone=registerWithOauthForm.cleaned_data['phone'],
+        location=registerWithOauthForm.cleaned_data['location'],
+        twitter=registerWithOauthForm.cleaned_data['twitter'],
+        linkedin=registerWithOauthForm.cleaned_data['linkedin'],
+        facebook=registerWithOauthForm.cleaned_data['facebook'],
+        github=registerWithOauthForm.cleaned_data['github'],
+        title1=registerWithOauthForm.cleaned_data['title1'],
+        title2=registerWithOauthForm.cleaned_data['title2'],
+        title3=registerWithOauthForm.cleaned_data['title3'])
+
+    if len(request.FILES) > 0:
+        pic = registerWithOauthForm.cleaned_data['profile_picture']
+        print('Uploaded picture: {} (type={})'.format(pic, type(pic)))
+        newProfile.profile_pic = pic
+        newProfile.profile_pic_ctype = type(pic)
+    newProfile.save()
+    print("New profile created for new user:", newProfile)
+
+    # # After registering users, automatically log them in.
+    # authUser = authenticate(username=registerWithOauthForm.cleaned_data['username'],
+    #                         password=registerWithOauthForm.cleaned_data['password'])
+    # authUser should never be None since we're using the correct username/password
+    # print("Logging new user in automatically...", newUser.username)
+    # login(request, authUser)
+
+    # After logging user in, redirect them to their profile.
+    return redirect(reverse('profile', args=[request.user]))
+
 
 def postOauthLogin(request):
     # Check if a profile exists with owner = request.user
     if not Profile.objects.filter(owner=request.user).exists():
-        # Create new profile with owner
-        newProfile = Profile(owner=request.user)
-        newProfile.save()
-        print("New profile created for new user:", newProfile)
+        # # Create new profile with owner
+        # newProfile = Profile(owner=request.user)
+        # newProfile.save()
+        # print("New profile created for new user:", newProfile)
 
+        # TODO: Link to registerWithOauth
+        # After logging user in with oauth, redirect them to the registerWithOauth page
+        return redirect(reverse('registerWithOauth'))
+
+    # # TODO: Redirect to this at the end of registerWithOauth
     # After logging user in, redirect them to their profile.
     return redirect(reverse('profile', args=[request.user]))
 
