@@ -11,4 +11,4 @@ VITAE is a portfolio generation platform where users can easily create high qual
 * Modular profiles: Your profile can be as detailed as you want. Add links to your socials, give yourself up to three titles to show on top of your profile, add as many experiences as you want, etc.
 * Mood lighting: Honestly I find myself just going on the site to use it as mood lighting... check it out!
 
-![](vitae.gif)
+![](https://media.giphy.com/media/EWWCfelhzsSSpg0276/giphy.gif)
