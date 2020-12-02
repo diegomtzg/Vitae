@@ -221,3 +221,12 @@ a.gradient-text:hover {
 .title-icon-small:hover {
   color: #bd5d38;
 }
+
+a.project-link {
+    color: #BD5D38;
+}
+
+a.project-link:hover {
+  text-decoration: none;
+  color: #0023FF;
+}

@@ -134,7 +134,8 @@ class ProjectsForm(forms.ModelForm):
             'name': forms.TextInput(attrs={'class': 'form-control','placeholder': 'Project name'}),
             'description': forms.TextInput(attrs={'class': 'form-control','placeholder': 'Project description'}),
             'start_date': forms.TextInput(attrs={'class': 'form-control','placeholder': 'Start date'}),
-            'end_date': forms.TextInput(attrs={'class': 'form-control','placeholder': 'End date'})
+            'end_date': forms.TextInput(attrs={'class': 'form-control','placeholder': 'End date'}),
+            'url': forms.TextInput(attrs={'class': 'form-control','placeholder': 'URL'}),
         }
 
 
@@ -144,5 +145,5 @@ class SkillsForm(forms.ModelForm):
         exclude = ('profile',)
         widgets = {
             'name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Skill name'}),
-            'proficiency': forms.NumberInput(attrs={'class': 'form-control', 'min': 1, 'max': 10, 'placeholder': 'Proficiency'})
+            'proficiency': forms.NumberInput(attrs={'class': 'form-control', 'min': 1, 'max': 10, 'placeholder': 'Proficiency'}),
         }

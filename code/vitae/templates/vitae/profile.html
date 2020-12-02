@@ -297,6 +297,9 @@
                                             </a>
                                         {% endif %}
                                     </h3>
+                                    {% if element.url %}
+                                        <a class="project-link" href={{element.url}}>Link to Project Resource</a>
+                                    {% endif %}
                                     <p>{{ element.description }}</p>
                                 </div>
                                 <div class="flex-shrink-0"><span class="gradient-text">{{ element.start_date }} – {{ element.end_date }}</span></div>
