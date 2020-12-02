@@ -605,6 +605,7 @@ main {
   padding-bottom: 100px;
   width: 100%;
   height: auto;
+  min-height: 100vh;
   overflow: hidden;
   background: #bd5d38;
   background: linear-gradient(120deg, #ff692f, #0023ff);
