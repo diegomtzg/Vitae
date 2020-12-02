@@ -1,4 +1,4 @@
-VITAE
+Vitae
 =======
 > Create beautiful digital personal portfolios without needing to design and implement and host your own website.
 
