@@ -29,7 +29,7 @@ SECRET_KEY = CONFIG.get("Django", "Secret")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = ['3.136.27.11', 'ec2-3-136-27-11.us-east-2.compute.amazonaws.com']
 
 
 # Application definition
@@ -98,8 +98,10 @@ WSGI_APPLICATION = 'webapps.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'django',
+        'USER': 'diego',
+        'PASSWORD': 'diego',
     }
 }
 
@@ -143,3 +145,4 @@ USE_TZ = True
 STATIC_URL = '/static/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'profile_pictures/')
 ASSETS_ROOT = os.path.join(BASE_DIR, 'vitae/static/vitae/assets/')
+STATIC_ROOT = os.path.join(BASE_DIR, 'collected_static')
