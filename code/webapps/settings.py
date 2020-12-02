@@ -67,11 +67,9 @@ SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = CONFIG.get("GoogleOAuth2", "Secret")
 SOCIAL_AUTH_GOOGLE_OAUTH2_AUTH_EXTRA_ARGUMENTS = {'prompt': 'select_account'}
 
 # Used by the @login_required decorator to redirect to the login action
-# LOGIN_URL = '/login'
 LOGIN_URL = '/oauth/login/google-oauth2/'
 
 # Default URL to redirect to after a user logs in.
-# TODO: Redirect to profile
 LOGIN_REDIRECT_URL = '/post-oauth/'
 
 TEMPLATES = [

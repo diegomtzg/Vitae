@@ -39,7 +39,6 @@ def registerAction(request):
         return render(request, 'vitae/register.html', {'form': registerForm, 'searchForm': NavSearchForm()})
 
     print("Valid register POST request received: ", request.POST)
-    # TODO: If user with request.username exists, then skip this new user creation
     newUser = User.objects.create_user(
         username=registerForm.cleaned_data['username'],
         email=registerForm.cleaned_data['email'],
@@ -92,15 +91,6 @@ def registerWithOauthAction(request):
         return render(request, 'vitae/registerWithOauth.html', {'form': registerWithOauthForm, 'searchForm': NavSearchForm()})
 
     print("Valid register POST request received: ", request.POST)
-    # # TODO: If user with request.username exists, then skip this new user creation
-    # newUser = User.objects.create_user(
-    #     username=registerForm.cleaned_data['username'],
-    #     email=registerForm.cleaned_data['email'],
-    #     password=registerForm.cleaned_data['password'],
-    #     first_name=registerForm.cleaned_data['first_name'],
-    #     last_name=registerForm.cleaned_data['last_name'])
-    # newUser.save()
-    # print("New user created:", newUser)
 
     # Create new empty profile associated with user
     newProfile = Profile(
@@ -124,13 +114,6 @@ def registerWithOauthAction(request):
     newProfile.save()
     print("New profile created for new user:", newProfile)
 
-    # # After registering users, automatically log them in.
-    # authUser = authenticate(username=registerWithOauthForm.cleaned_data['username'],
-    #                         password=registerWithOauthForm.cleaned_data['password'])
-    # authUser should never be None since we're using the correct username/password
-    # print("Logging new user in automatically...", newUser.username)
-    # login(request, authUser)
-
     # After logging user in, redirect them to their profile.
     return redirect(reverse('profile', args=[request.user]))
 
@@ -138,16 +121,9 @@ def registerWithOauthAction(request):
 def postOauthLogin(request):
     # Check if a profile exists with owner = request.user
     if not Profile.objects.filter(owner=request.user).exists():
-        # # Create new profile with owner
-        # newProfile = Profile(owner=request.user)
-        # newProfile.save()
-        # print("New profile created for new user:", newProfile)
-
-        # TODO: Link to registerWithOauth
         # After logging user in with oauth, redirect them to the registerWithOauth page
         return redirect(reverse('registerWithOauth'))
 
-    # # TODO: Redirect to this at the end of registerWithOauth
     # After logging user in, redirect them to their profile.
     return redirect(reverse('profile', args=[request.user]))
 
