@@ -12,21 +12,24 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 
 import os
 from pathlib import Path
+from configparser import ConfigParser
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+CONFIG = ConfigParser()
+CONFIG.read(os.path.join(BASE_DIR, "config.ini"))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'pp#9t#a%02ibd*m31p=-qwsi9xq&e&stjil+grcb7vj_g^iw9p'
+SECRET_KEY = CONFIG.get("Django", "Secret")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['3.136.27.11', 'ec2-3-136-27-11.us-east-2.compute.amazonaws.com']
 
 
 # Application definition
@@ -38,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'social_django',
     'vitae',
 ]
 
@@ -53,9 +57,22 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'webapps.urls'
 
-# Used by the @login_required decorator to redirect to the login action
-LOGIN_URL = '/login'
+AUTHENTICATION_BACKENDS = (
+    'social_core.backends.google.GoogleOAuth2',
+    'django.contrib.auth.backends.ModelBackend',
+)
 
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = CONFIG.get("GoogleOAuth2", "Key")
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = CONFIG.get("GoogleOAuth2", "Secret")
+SOCIAL_AUTH_GOOGLE_OAUTH2_AUTH_EXTRA_ARGUMENTS = {'prompt': 'select_account'}
+
+# Used by the @login_required decorator to redirect to the login action
+# LOGIN_URL = '/login'
+LOGIN_URL = '/oauth/login/google-oauth2/'
+
+# Default URL to redirect to after a user logs in.
+# TODO: Redirect to profile
+LOGIN_REDIRECT_URL = '/post-oauth/'
 
 TEMPLATES = [
     {
@@ -66,6 +83,8 @@ TEMPLATES = [
             'context_processors': [
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
+                'social_django.context_processors.backends',
+                'social_django.context_processors.login_redirect',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ],
@@ -81,8 +100,10 @@ WSGI_APPLICATION = 'webapps.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'django',
+        'USER': 'diego',
+        'PASSWORD': 'diego',
     }
 }
 
@@ -126,3 +147,4 @@ USE_TZ = True
 STATIC_URL = '/static/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'profile_pictures/')
 ASSETS_ROOT = os.path.join(BASE_DIR, 'vitae/static/vitae/assets/')
+STATIC_ROOT = os.path.join(BASE_DIR, 'collected_static')
