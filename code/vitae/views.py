@@ -1,6 +1,6 @@
 from django.conf import settings
-from django.shortcuts import render, redirect, reverse, get_object_or_404
-from django.http import HttpResponse
+from django.shortcuts import render, redirect, reverse, get_object_or_404,
+from django.http import HttpResponse, Http404
 from django.contrib.auth import login, logout
 from django.contrib.auth.decorators import login_required
 from vitae.forms import *
@@ -287,130 +287,123 @@ def addProfileSection(request, sectionName):
 
 @login_required
 def editProfileElement(request, sectionName, elementId):
-    # If elementId is not an integer, don't try anything or it will break
     try:
         id = int(elementId)
+        if sectionName == 'work':
+            element = request.user.profile.workElements.get(id=id)
+            if request.method == 'GET':
+                form = WorkExperienceForm(instance=element)
+                return render(request, 'vitae/edit_form.html', {'form': form, 'section': 'work', 'id': id})
+            else:
+                form = WorkExperienceForm(request.POST, instance=element)
+                if form.is_valid():
+                    form.save()
+                return redirect(reverse('profile', args=[request.user]))
+        elif sectionName == 'education':
+            element = request.user.profile.educationElements.get(id=id)
+            if request.method == 'GET':
+                form = EducationForm(instance=element)
+                return render(request, 'vitae/edit_form.html', {'form': form, 'section': 'education', 'id': id})
+            else:
+                form = EducationForm(request.POST, instance=element)
+                if form.is_valid():
+                    form.save()
+                return redirect(reverse('profile', args=[request.user]))
+        elif sectionName == 'project':
+            element = request.user.profile.projectElements.get(id=id)
+            if request.method == 'GET':
+                form = ProjectsForm(instance=element)
+                return render(request, 'vitae/edit_form.html', {'form': form, 'section': 'project', 'id': id})
+            else:
+                form = ProjectsForm(request.POST, instance=element)
+                if form.is_valid():
+                    form.save()
+                return redirect(reverse('profile', args=[request.user]))
+        elif sectionName == 'skill':
+            element = request.user.profile.skillElements.get(id=id)
+            if request.method == 'GET':
+                form = SkillsForm(instance=element)
+                return render(request, 'vitae/edit_form.html', {'form': form, 'section': 'skill', 'id': id})
+            else:
+                form = SkillsForm(request.POST, instance=element)
+                if form.is_valid():
+                    form.save()
+                return redirect(reverse('profile', args=[request.user]))
+        if sectionName == 'about':
+            if request.method == 'GET':
+                form = AboutForm(data={
+                    'first_name': request.user.first_name,
+                    'last_name': request.user.last_name,
+                    'email': request.user.email,
+                    'phone': request.user.profile.phone,
+                    'location': request.user.profile.location,
+                    'twitter': request.user.profile.twitter,
+                    'github': request.user.profile.github,
+                    'facebook': request.user.profile.facebook,
+                    'linkedin': request.user.profile.linkedin,
+                    'bio': request.user.profile.bio,
+                    'title1': request.user.profile.title1,
+                    'title2': request.user.profile.title2,
+                    'title3': request.user.profile.title3,
+                })
+                return render(request, 'vitae/edit_form.html', {'form': form, 'section': 'about', 'id': id, 'searchForm': NavSearchForm()})
+            else:
+                form = AboutForm(request.POST, request.FILES)
+                if form.is_valid():
+                    user = request.user
+                    user.first_name = form.cleaned_data['first_name']
+                    user.last_name = form.cleaned_data['last_name']
+                    user.email = form.cleaned_data['email']
+                    user.save()
+                    profile = request.user.profile
+                    profile.phone = form.cleaned_data['phone']
+                    profile.location = form.cleaned_data['location']
+                    profile.twitter = form.cleaned_data['twitter']
+                    profile.github = form.cleaned_data['github']
+                    profile.facebook = form.cleaned_data['facebook']
+                    profile.linkedin = form.cleaned_data['linkedin']
+                    profile.bio = form.cleaned_data['bio']
+                    profile.title1 = form.cleaned_data['title1']
+                    profile.title2 = form.cleaned_data['title2']
+                    profile.title3 = form.cleaned_data['title3']
+
+                    if len(request.FILES) > 0:
+                        pic = form.cleaned_data['profile_picture']
+                        print('Uploaded picture: {} (type={})'.format(pic, type(pic)))
+                        profile.profile_pic = pic
+                        profile.profile_pic_ctype = type(pic)
+
+                    profile.save()
+
+            return redirect(reverse('profile', args=[request.user]))
     except:
-        user = request.user
-        context = getProfileContext(user)
-        return render(request, 'vitae/profile.html', context)
-
-    if sectionName == 'work':
-        element = request.user.profile.workElements.get(id=id)
-        if request.method == 'GET':
-            form = WorkExperienceForm(instance=element)
-            return render(request, 'vitae/edit_form.html', {'form': form, 'section': 'work', 'id': id})
-        else:
-            form = WorkExperienceForm(request.POST, instance=element)
-            if form.is_valid():
-                form.save()
-            return redirect(reverse('profile', args=[request.user]))
-    elif sectionName == 'education':
-        element = request.user.profile.educationElements.get(id=id)
-        if request.method == 'GET':
-            form = EducationForm(instance=element)
-            return render(request, 'vitae/edit_form.html', {'form': form, 'section': 'education', 'id': id})
-        else:
-            form = EducationForm(request.POST, instance=element)
-            if form.is_valid():
-                form.save()
-            return redirect(reverse('profile', args=[request.user]))
-    elif sectionName == 'project':
-        element = request.user.profile.projectElements.get(id=id)
-        if request.method == 'GET':
-            form = ProjectsForm(instance=element)
-            return render(request, 'vitae/edit_form.html', {'form': form, 'section': 'project', 'id': id})
-        else:
-            form = ProjectsForm(request.POST, instance=element)
-            if form.is_valid():
-                form.save()
-            return redirect(reverse('profile', args=[request.user]))
-    elif sectionName == 'skill':
-        element = request.user.profile.skillElements.get(id=id)
-        if request.method == 'GET':
-            form = SkillsForm(instance=element)
-            return render(request, 'vitae/edit_form.html', {'form': form, 'section': 'skill', 'id': id})
-        else:
-            form = SkillsForm(request.POST, instance=element)
-            if form.is_valid():
-                form.save()
-            return redirect(reverse('profile', args=[request.user]))
-    if sectionName == 'about':
-        if request.method == 'GET':
-            form = AboutForm(data={
-                'first_name': request.user.first_name,
-                'last_name': request.user.last_name,
-                'email': request.user.email,
-                'phone': request.user.profile.phone,
-                'location': request.user.profile.location,
-                'twitter': request.user.profile.twitter,
-                'github': request.user.profile.github,
-                'facebook': request.user.profile.facebook,
-                'linkedin': request.user.profile.linkedin,
-                'bio': request.user.profile.bio,
-                'title1': request.user.profile.title1,
-                'title2': request.user.profile.title2,
-                'title3': request.user.profile.title3,
-            })
-            return render(request, 'vitae/edit_form.html', {'form': form, 'section': 'about', 'id': id, 'searchForm': NavSearchForm()})
-        else:
-            form = AboutForm(request.POST, request.FILES)
-            if form.is_valid():
-                user = request.user
-                user.first_name = form.cleaned_data['first_name']
-                user.last_name = form.cleaned_data['last_name']
-                user.email = form.cleaned_data['email']
-                user.save()
-                profile = request.user.profile
-                profile.phone = form.cleaned_data['phone']
-                profile.location = form.cleaned_data['location']
-                profile.twitter = form.cleaned_data['twitter']
-                profile.github = form.cleaned_data['github']
-                profile.facebook = form.cleaned_data['facebook']
-                profile.linkedin = form.cleaned_data['linkedin']
-                profile.bio = form.cleaned_data['bio']
-                profile.title1 = form.cleaned_data['title1']
-                profile.title2 = form.cleaned_data['title2']
-                profile.title3 = form.cleaned_data['title3']
-
-                if len(request.FILES) > 0:
-                    pic = form.cleaned_data['profile_picture']
-                    print('Uploaded picture: {} (type={})'.format(pic, type(pic)))
-                    profile.profile_pic = pic
-                    profile.profile_pic_ctype = type(pic)
-
-                profile.save()
-
-            return redirect(reverse('profile', args=[request.user]))
+        # Non-existing id was passed or id is not an integer, fail gracefully
+        raise Http404("Element with given id not found.")
 
 
 
 @login_required
 def removeProfileElement(request, sectionName, elementId):
-    # If elementId is not an integer, don't try anything or it will break
     try:
         id = int(elementId)
-    except:
-        user = request.user
-        context = getProfileContext(user)
-        return render(request, 'vitae/profile.html', context)
-
-    if sectionName == 'work':
-            element = request.user.profile.workElements.get(id=id)
+        if sectionName == 'work':
+                element = request.user.profile.workElements.get(id=id)
+                element.delete()
+                return redirect(reverse('profile', args=[request.user]))
+        if sectionName == 'education':
+            element = request.user.profile.educationElements.get(id=id)
             element.delete()
             return redirect(reverse('profile', args=[request.user]))
-    if sectionName == 'education':
-        element = request.user.profile.educationElements.get(id=id)
-        element.delete()
-        return redirect(reverse('profile', args=[request.user]))
-    if sectionName == 'project':
-        element = request.user.profile.projectElements.get(id=id)
-        element.delete()
-        return redirect(reverse('profile', args=[request.user]))
-    if sectionName == 'skill':
-        element = request.user.profile.skillElements.get(id=id)
-        element.delete()
-        return redirect(reverse('profile', args=[request.user]))
+        if sectionName == 'project':
+            element = request.user.profile.projectElements.get(id=id)
+            element.delete()
+            return redirect(reverse('profile', args=[request.user]))
+        if sectionName == 'skill':
+            element = request.user.profile.skillElements.get(id=id)
+            element.delete()
+            return redirect(reverse('profile', args=[request.user]))
+    except:
+        raise Http404("Element with given id not found.")
 
 
 def getPhoto(request, username):
