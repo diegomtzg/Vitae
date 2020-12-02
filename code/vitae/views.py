@@ -136,7 +136,7 @@ def searchAction(request):
     if not searchForm.is_valid():
         return render(request, 'vitae/search.html', context={'form': searchForm})
 
-    searchResults = profileSearch(searchForm.cleaned_data['query'])
+    searchResults = profileSearch(searchForm.cleaned_data['query'].lower())
 
     return render(request, 'vitae/searchResults.html', context={'results': searchResults, 'searchForm': NavSearchForm()} )
 
