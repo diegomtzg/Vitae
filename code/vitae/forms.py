@@ -40,13 +40,7 @@ class RegisterForm(forms.Form):
         return clean_data
 
 class RegisterWithOauthForm(forms.Form):
-    # first_name = forms.CharField(widget=forms.TextInput(attrs={'class':'input--style-5'}))
-    # last_name = forms.CharField(widget=forms.TextInput(attrs={'class':'input--style-5'}))
-    # email = forms.EmailField(widget=forms.EmailInput(attrs={'class':'input--style-5'}))
     phone = forms.CharField(required=False, widget=forms.TextInput(attrs={'class': 'input--style-5'}))
-    # username = forms.CharField(widget=forms.TextInput(attrs={'class':'input--style-5'}))
-    # password = forms.CharField(widget=forms.PasswordInput(attrs={'class':'input--style-5'}))
-    # confirm_password = forms.CharField(widget=forms.PasswordInput(attrs={'class':'input--style-5'}))
     location = forms.CharField(required=False, widget=forms.TextInput(attrs={'class': 'input--style-5'}))
     twitter = forms.URLField(required=False, widget=forms.TextInput(attrs={'class': 'input--style-5'}))
     github = forms.URLField(required=False, widget=forms.TextInput(attrs={'class': 'input--style-5'}))
@@ -60,12 +54,6 @@ class RegisterWithOauthForm(forms.Form):
 
     def clean(self):
         clean_data = super().clean()
-
-        # # Verify that username is unique.
-        # username = clean_data['username']
-        # if User.objects.all().filter(username__exact=username):
-        #     raise forms.ValidationError("Username already exists.")
-
         return clean_data
 
 class LoginForm(forms.Form):
@@ -146,7 +134,8 @@ class ProjectsForm(forms.ModelForm):
             'name': forms.TextInput(attrs={'class': 'form-control','placeholder': 'Project name'}),
             'description': forms.TextInput(attrs={'class': 'form-control','placeholder': 'Project description'}),
             'start_date': forms.TextInput(attrs={'class': 'form-control','placeholder': 'Start date'}),
-            'end_date': forms.TextInput(attrs={'class': 'form-control','placeholder': 'End date'})
+            'end_date': forms.TextInput(attrs={'class': 'form-control','placeholder': 'End date'}),
+            'url': forms.TextInput(attrs={'class': 'form-control','placeholder': 'URL'}),
         }
 
 
@@ -156,5 +145,5 @@ class SkillsForm(forms.ModelForm):
         exclude = ('profile',)
         widgets = {
             'name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Skill name'}),
-            'proficiency': forms.NumberInput(attrs={'class': 'form-control', 'min': 1, 'max': 10, 'placeholder': 'Proficiency'})
+            'proficiency': forms.NumberInput(attrs={'class': 'form-control', 'min': 1, 'max': 10, 'placeholder': 'Proficiency'}),
         }
