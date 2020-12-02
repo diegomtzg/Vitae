@@ -1,9 +1,14 @@
-# Team20 - Vitae
-Repository for team20
+VITAE
+=======
+> Create beautiful digital personal portfolios without needing to design and implement and host your own website.
 
-Vitae is live on AWS [here](http://ec2-3-136-27-11.us-east-2.compute.amazonaws.com/).
+## Overview
+VITAE is a portfolio generation platform where users can easily create high quality showcases of their experiences. It also has powerful search capabilities so that anyone can look up profiles on the site using keywords, allowing recruiters to hone in on desired candidates and users to get hired!
 
-External Bootstrap starter templates used:
-* [Search Page](https://codepen.io/tommysmall92/pen/oPjaNW)
-* [Signup Page](https://colorlib.com/etc/regform/colorlib-regform-5/)
-* [Profile Page](https://startbootstrap.com/theme/resume)
+## Features
+* Search: Look up all profiles on the site by comma separated keywords such as username, first name, last name, school, skill, etc. 
+* OAuth: Create new profiles through the registration form or authenticate through Google!
+* Modular profiles: Your profile can be as detailed as you want. Add links to your socials, give yourself up to three titles to show on top of your profile, add as many experiences as you want, etc.
+* Mood lighting: Honestly I find myself just going on the site to use it as mood lighting... check it out!
+
+![](vitae.gif)
