@@ -1,5 +1,5 @@
 from django.conf import settings
-from django.shortcuts import render, redirect, reverse, get_object_or_404,
+from django.shortcuts import render, redirect, reverse, get_object_or_404
 from django.http import HttpResponse, Http404
 from django.contrib.auth import login, logout
 from django.contrib.auth.decorators import login_required

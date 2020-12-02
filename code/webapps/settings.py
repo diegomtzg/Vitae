@@ -27,9 +27,9 @@ CONFIG.read(os.path.join(BASE_DIR, "config.ini"))
 SECRET_KEY = CONFIG.get("Django", "Secret")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ['3.136.27.11', 'ec2-3-136-27-11.us-east-2.compute.amazonaws.com']
+ALLOWED_HOSTS = ['3.136.27.11', 'ec2-3-136-27-11.us-east-2.compute.amazonaws.com', 'localhost']
 
 
 # Application definition
@@ -100,8 +100,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'django',
-        'USER': 'diego',
-        'PASSWORD': 'diego',
+        'USER': CONFIG.get("SQL", "User"),
+        'PASSWORD': CONFIG.get("SQL", "Password"),
     }
 }
 
