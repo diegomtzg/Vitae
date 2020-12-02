@@ -1,0 +1,126 @@
+{% extends 'vitae/base.html' %}
+
+{% block page_title %}
+    Register | Vitae
+{% endblock %}
+
+{% block page_css %}
+    {% load static %}
+    <link href="{% static 'vitae/css/signup.css' %}" rel="stylesheet" media="all">
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="wrapper wrapper--w960 p-t-100">
+            <div class="card card-5">
+                <div class="card-heading">
+                    <h2 class="title">Vitae - Register</h2>
+                </div>
+                <div class="card-body">
+                    <form enctype="multipart/form-data" method="POST" action="{% url 'registerWithOauth' %}">
+                        <div class="form-row">
+                            {{ form.non_field_errors }}
+                        </div>
+                        {% csrf_token %}
+                        <div class="form-row m-b-55">
+                            <div class="name">Contact Information</div>
+                            <div class="value">
+                                <div class="row row-space">
+                                    <div class="col">
+                                        <div class="input-group-desc">
+                                            {{ form.location }}
+                                            <label class="label--desc">address</label>
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="input-group-desc">
+                                            {{ form.phone }}
+                                            <label class="label--desc">phone number</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-row m-b-55">
+                            <div class="name">Socials</div>
+                            <div class="value">
+                                <div class="row row-space">
+                                    <div class="col">
+                                        <div class="input-group-desc">
+                                            {{ form.github }}
+                                            <label class="label--desc">Github</label>
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="input-group-desc">
+                                            {{ form.twitter }}
+                                            <label class="label--desc">Twitter</label>
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="input-group-desc">
+                                            {{ form.linkedin }}
+                                            <label class="label--desc">LinkedIn</label>
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="input-group-desc">
+                                            {{ form.facebook }}
+                                            <label class="label--desc">Facebook</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="name">Tell people about yourself!</div>
+                            <div class="value">
+                                <div class="input-group">
+                                    {{ form.bio }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row m-b-55">
+                            <div class="name">3 titles you would give yourself</div>
+                            <div class="value">
+                                <div class="row row-space">
+                                    <div class="col">
+                                        <div class="input-group-desc">
+                                            {{ form.title1 }}
+                                            <label class="label--desc">Title 1</label>
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="input-group-desc">
+                                            {{ form.title2 }}
+                                            <label class="label--desc">Title 2</label>
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="input-group-desc">
+                                            {{ form.title3 }}
+                                            <label class="label--desc">Title 3</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="name">Profile picture</div>
+                            <div class="value">
+                                <div class="input-group">
+                                    {{ form.profile_picture }}
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <button class="btn btn--radius-2 btn--red" type="submit">Register</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+{% endblock %}
