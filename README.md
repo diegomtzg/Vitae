@@ -1,6 +1,6 @@
 Vitae
 =======
-> Create beautiful digital personal portfolios without needing to design and implement and host your own website.
+> Create beautiful digital personal portfolios without needing to design, implement and host your own website.
 
 ## Overview
 Vitae is a portfolio generation platform where users can easily create high quality showcases of their professional experiences. It also has powerful search capabilities so that anyone can look up profiles on the site using keywords, allowing recruiters to hone in on desired candidates with ease.
